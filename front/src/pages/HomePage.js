@@ -8,7 +8,6 @@ import { selectProduct } from "../features/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from "../features/apiCall";
 import Loader from "../components/Loader/Loader";
-import axios from "axios";
 
 const HomePage = () => {
   const { products, isFetching } = useSelector(selectProduct);
