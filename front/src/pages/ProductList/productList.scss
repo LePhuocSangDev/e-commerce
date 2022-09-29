@@ -1,0 +1,213 @@
+@import  "../../globalStyle/variable.scss";
+
+.list {
+  &__heading {
+    text-align: center;
+    margin: 64px 0;
+    p {
+      margin: $spacing-sm 0;
+    }
+  }
+ 
+  .search__input {
+    text-align: center;
+    margin: 64px auto;
+    position: relative;
+    width: 60%;
+    display: flex;
+    align-items: center;
+   
+
+    button {
+      position: absolute;
+      right: 10px;
+      font-size: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 8px ;
+      font-size: 20px;
+      overflow-x: hidden;
+    }
+  }
+
+  &__container {
+    display:flex;
+    gap: $spacing-lg;
+    margin: $spacing-lg 0;
+  }
+
+  &__left {
+    flex: 2;
+
+    .list__filter {
+      font-size: 28px;
+      font-weight: normal;
+      border-bottom: 1px solid rgba(0,0,0,0.3);
+      padding: $spacing-md 0;
+    } 
+
+    .filter-type {  
+      padding: $spacing-md 4px;
+      border-bottom: 1px solid rgba(0,0,0,0.3);
+
+       p {
+        display: flex;
+        justify-content: space-between;
+        font-size: 20px;  
+        
+          button {
+            cursor: pointer;
+            font-size: 20px; 
+          } 
+        }    
+
+       &__list {
+        margin: $spacing-sm 0;
+        list-style-type: none;
+        padding: 0;
+
+        li {
+          margin: 4px 0;
+          &:first-child {
+            font-size: 20px;
+            text-align: center;
+          }
+
+          a {
+            color: $text2;
+            &:hover {
+              opacity: 0.6;
+            }
+          }
+
+        }
+       
+       }
+
+
+       &__size {
+        display: flex;
+        flex-direction: column;
+        margin-top: 8px;
+        color: inherit;       
+
+        
+      }
+
+      &__colors {
+        display: flex;
+        margin-top: $spacing-md;
+        flex-wrap: wrap;
+        gap: $spacing-sm;
+        
+
+        &-wrapper {
+          display: block;
+          position: relative;    
+          width: 30px;
+          height: 30px;       
+          cursor: pointer;
+          
+          input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            
+            height: 0;
+            width: 0;
+            top: 0;
+          }
+          .checkmark {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            
+            border-radius: 50%;
+
+            &-checked {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%,-50%);
+              font-weight: 900;
+              display: none
+            }
+          }
+          
+          
+        }
+        
+      
+        &-wrapper input:checked + .checkmark .checkmark-checked {
+          display:block !important;
+        }
+
+
+
+      }
+
+      .price-min {
+        position: absolute;
+        left: -6px;
+        bottom: -16px;
+      }
+      .price-max {
+        position: absolute;
+        right: -15px;
+        bottom: -16px;
+      }
+    }
+
+    .filter__mobile-button {
+      display: none;
+      margin-top: 64px;
+      .close-filter {
+        @include button;
+        background: black;
+        right: 20px;
+        background: $primary;
+
+      }
+  
+      .clear-filter {
+
+        @include button;
+        background: black;
+      }
+  
+      .apply-filter {
+
+        @include button;
+        background: $primary;
+        
+      }
+    }
+   
+
+    
+  }
+
+  .mobile__filter {
+      display: none;
+       @include button;
+        text-align: center;
+        width: 100%;
+        border: 1px solid black;
+  }
+
+  &__right {
+    flex: 8;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: $spacing-sm;
+  }
+}
+
+.sort-products {
+  display: flex;
+  gap: 16px;
+  align-self: flex-end;
+}

@@ -1,0 +1,105 @@
+@import "../../globalStyle/variable.scss";
+
+.login {
+  background: url("https://images.unsplash.com/photo-1514064019862-23e2a332a6a6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGxvZ2lufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=1920&q=60") no-repeat ;
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 100vh;
+  padding: $spacing-lg 0;
+  color:white;
+  
+  h2 {
+    text-align: center;
+    
+  }
+
+  &__container {
+    margin: $spacing-lg auto;
+    width: 30%;  
+    height: 80%; 
+    border: 1px solid black;
+    box-shadow: 3px 0px 15px #0b0a0a;
+    padding: 0 $spacing-md ;
+  }
+
+  &__icon {
+    font-size: 40px;
+    padding: $spacing-lg 0;
+    display: block;
+    text-align: center;
+    color: aqua;
+  }
+
+  &__input {
+    width: 100%;
+    position: relative;
+    margin: $spacing-sm 0;
+    display: flex;
+    align-items: center;
+
+    i {
+      position: absolute;
+      left: 10px;  
+      color: black;    
+    }
+
+    input {
+      width: 100%;
+     padding: 8px 0 8px $spacing-lg;
+    }
+  }
+
+  label {
+    input {
+      margin: 8px 0;
+    }
+  }
+
+  &__button {
+    @include button;
+    width: 100%;
+    margin:$spacing-sm 0;
+    text-align: center;
+    border: none;
+  }
+
+  &__register {
+    margin:$spacing-sm 0;
+  }
+
+  &__others {
+    display: flex;
+    gap: 32px;
+    margin: $spacing-md  0;
+
+    a {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;      
+      display: block;
+
+      &:first-child {
+        background-image: url(../../asset/img/fb.PNG);
+        background-position: center;
+        background-size: cover;       
+      }   
+
+      &:last-child {
+        background: url(../../asset/img/gg.png) no-repeat center;
+        background-position: center;
+        background-size: cover;  
+      }    
+    }
+
+    .register__container {
+      
+    }
+
+   
+  }
+}
+
+.error-msg {
+  color: red
+}

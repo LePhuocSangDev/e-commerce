@@ -1,0 +1,42 @@
+POST http://localhost:8000/api/auth/register
+Content-Type: application/json
+
+{
+  "username":"test15",
+  "password":"test15",
+  "email":"test15@gmail.com"  
+}
+
+### 
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json;
+
+{
+  "username":"test15",
+  "password":"test15",
+}
+
+###
+
+POST http://localhost:8000/api/products
+Content-Type: application/json
+
+{
+"title":"Running Shoe 121",
+"desc":"This is the best product ever",
+"img": "https://images.pexels.com/photos/1464625/pexels-photo-1464625.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+"categories":"shoe",
+"size":["S","M","L","XL"],
+"color":["black","blue","red"],
+"price": 800000,
+"instock":true
+}
+
+
+###
+DELETE http://localhost:8000/api/carts
+
+###
+GET https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district
+

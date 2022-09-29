@@ -1,0 +1,145 @@
+@import "../CartPage/cartPage.scss";
+@import "../../globalStyle/variable.scss";
+
+.checkout {
+  @include flexbox(unset,unset,$spacing-md);
+  padding: $spacing-lg 0 ;
+  &-left {
+    flex: 2;
+    border-right: 1px solid black;
+    padding-right: 64px
+  }
+  &__heading {
+    margin-bottom: $spacing-lg;
+  }
+
+  span {
+    color:$text2;
+    a {
+      display: inline;
+    }
+  }
+
+  &__form {
+    margin: $spacing-md 0;
+    @include flexbox(unset,unset,8px);
+    flex-direction: column;
+
+    input {
+      padding: 8px 4px;
+      border-radius: 5px;
+    }
+
+    &-name{      
+        width: 100%;
+    }
+
+    &-container {
+      @include flexbox(unset, unset, $spacing-md);
+
+      input {
+        width: 50%;
+      }
+    }
+
+
+    &-address{
+      width: 100%;
+    }
+
+  }
+
+  &__select {
+    display: flex;
+    gap: 16px;
+    select {
+      flex: 1;
+      padding: 8px 4px;   
+    }
+  }
+
+  &__pay-btn {
+    @include button;
+    width: 60%;
+    justify-self: flex-end;
+    padding: 8px 4px;  
+  }
+
+  &-step2 {
+    flex: 2;
+    display:flex;
+    padding: 0 32px;
+    gap: 16px;
+    flex-direction: column;
+
+      &__heading {
+        font-size: 24px;
+      }
+
+      &__delivery, &__payment {
+        padding: 8px 4px;
+      }
+
+      &__btn {
+        @include flexbox(space-between,center, 0);
+        
+          &-finish {
+            background-color: $primary;
+            padding: 8px 4px;
+            border-radius: 5px;
+            color: white
+          }
+      }
+  }
+
+  &-step3 {
+    flex:2;
+
+    &__heading {
+      @include flexbox(unset,center, 16px);
+      flex-direction:column;
+      h4 {
+        font-size: 24px;
+      }
+    }
+
+    &__info {
+      padding: 8px;
+      border: 1px solid rgba($color: #000000, $alpha: 0.2);
+      margin: $spacing-md 0;     
+      color: $text2;
+      h4 {
+        color: black;
+      }
+    }
+
+    &__order-info {
+      h4 {
+        font-size: 20px;
+      }
+      p {
+        padding: 8px 0;
+      }
+      span {
+        color: $primary
+      }
+
+    }
+
+    &__methods-info {
+      p {
+        padding-bottom: 8px ;
+      }
+    }
+
+    &__btn {
+      @include flexbox(space-between,center);
+      padding: 0 8px
+    }
+  }
+
+  .coupon-input {
+    width: 100%;
+    padding: 8px 4px;
+  }
+}

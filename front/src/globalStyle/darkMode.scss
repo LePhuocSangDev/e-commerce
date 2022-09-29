@@ -1,0 +1,84 @@
+ @import "./variable.scss";
+ 
+ .app.dark {
+      background-color: black; 
+
+      .nav {
+
+        .cart {
+          background-color: black;
+          color: white;
+          &__header {
+            background-color: rgb(33, 31, 31);
+            color: white;
+          }
+
+          &__item {
+            background: rgb(33, 32, 32);
+
+            .up,.down {
+              color:black;
+         
+            }
+           
+          }
+        }        
+      } 
+      
+      .categories {
+        a {
+          border: 1px solid rgb(255, 255, 255) !important;
+        }
+        
+        img {
+          border-bottom: 1px solid white;
+        }
+      }
+
+      .product-card {
+        border: 0.5px solid white;
+        color: white;
+
+        .product__details {
+
+          a {
+            color: white;
+          }
+        }
+      }
+
+      .product__container {
+        color: white;
+
+        .product__button.bg-black {
+          background-color: orange;
+        }
+
+        .product__detail-color {
+          border: 1px solid white
+        }
+      }
+
+      .cart-page {
+        color: white;
+
+        &__title {
+          border-bottom: 1px solid rgba(253, 253, 253, 0.3);
+        }
+
+        &__product {
+          border: 1px solid rgba(253, 253, 253, 0.3);
+
+          .input-quantity {
+            button {
+              color: black;
+
+            }
+          }
+        }
+      }
+
+      .list {
+        color: white;
+      }
+   }

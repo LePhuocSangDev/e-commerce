@@ -1,0 +1,19 @@
+@import "../../globalStyle/variable.scss";
+
+.not-found {
+  height: 100vh;
+ @include flexbox(center,center);
+ text-align: center;
+
+ div {
+  width: 50vw;
+  h4 {
+    font-size: 30px;
+   }
+   p {
+    margin: 16px 0;
+    line-height: 1.6;
+ }
+  }  
+
+}

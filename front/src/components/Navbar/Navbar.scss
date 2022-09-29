@@ -1,0 +1,368 @@
+@import "../../globalStyle/variable.scss";
+
+.nav {
+  position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.3);
+    
+
+    .mobile-menu__icon {
+      display: none;
+    }
+
+  .subnav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    color: $text3;
+    height: 28px;
+    background-color: black;
+    
+
+    .icons {
+      font-size: 20px;
+      i {
+        padding:0 8px;
+      }
+    }
+
+    ul {
+      display: flex;
+      list-style-type: none;
+      li {
+        padding: 0 8px;
+        a {
+          text-decoration: none;
+          color: $text3
+        }
+      }
+    }
+  } 
+  .main-nav {
+    
+    padding:0 24px;
+    height: 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+    background: white;
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      
+
+      i {
+        background-color: $primary;
+        padding: 8px;
+        font-size: 20px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      img {
+        padding-left: 16px;
+        width: 16vw;
+        cursor:pointer;
+        height: 72px;
+        object-fit: cover;
+      }
+    }
+
+    .menu {
+      display: flex;
+      list-style-type: none;
+
+    
+      .mobile-menu__close {
+        display: none;
+      }
+     
+      li {
+        padding:8px;
+        font-size: 20px;
+        position: relative;
+        &:hover {
+          background: $primary;
+          color: white;
+          border-radius: 3px;
+        }
+        &:after {
+          content: "";
+          display: block;
+          position: absolute;
+          height:20px;
+          background-color: rgba($color: #000000, $alpha: 0.3);
+          width: 1px;
+          right: 0;
+          top: 30%;
+        }
+        a {
+          text-decoration: none;
+          color: inherit
+        }
+      }
+
+      li:last-child {
+        &:after {
+          display: none;
+        }
+      }
+    }
+    
+    .cart-search {
+      display: flex;
+      gap: $spacing-sm;
+      
+      .user-options {
+        position: relative;
+        @include flexbox(unset, center, 4px);
+
+        &__avatar {
+          display: flex;
+          gap: 4px;         
+        }
+        
+        &__list {
+          list-style-type: none;
+          padding: 0;
+          position: absolute;
+          top: 123%;
+          transform: translateX(-50%);
+          left: 50%;
+          background-color: white;
+          width: 80px;
+          text-align: center;
+          border: 1px solid rgba(0,0,0,0.4);
+
+          &::after {
+            display: block;
+            content: "";
+            position: absolute;
+            top: -23%;
+            transform: translateX(-50%);
+            left: 50%;
+            border: 10px solid;
+            border-color:  transparent transparent black transparent;
+          }
+
+          li {
+           
+            
+            a {
+              width: 100%;
+              height: 100%;
+              display: block;
+              padding: 0;
+              padding: 4px;
+            }
+          
+          }
+
+
+        }
+      }
+
+      
+      
+
+      a {
+        padding: 8px;
+        cursor: pointer;
+        position: relative;
+         &:hover {
+          background: $primary;
+          color:white;
+          border-radius: 3px;
+                
+        }
+        color: inherit;
+        i {
+          font-size: 24px;
+        }
+        span {
+          position: absolute;
+          top: 0;
+          right: -5px;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background-color: black;
+          color: white;
+          text-align: center;
+          font-size: 16px;
+        }
+      }
+
+      
+    }
+
+
+  }
+
+  .bottom-nav {
+    display: none;
+    a {
+      text-decoration: none;
+      color:$text2;
+      padding: 2px 4px;
+      font-size: 16px;
+      &:hover {
+        background-color: $primary;
+        border-radius: 3px;
+
+      }
+    }
+    i {
+      font-size: 12px;
+      padding: 0 8px;
+    }
+  }
+
+  .cart {
+    width: 25vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: rgb(235, 230, 230);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    
+
+    &__header{
+      
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 15vh;
+      font-size: 24px;
+      background-color: rgb(150, 148, 145);
+      padding: $spacing-lg 0;
+      position: relative;
+      
+      i {
+        position: absolute;
+        left: 20px;
+        cursor: pointer;
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+    }
+ 
+    &__items {
+      padding: $spacing-sm;    
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      height: 50vh;
+      overflow-x: hidden;
+      overflow-y: scroll ;
+      scrollbar-width: none;
+      ::-webkit-scrollbar { display: none; }
+    }
+
+    &__item {
+      display: flex;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 10px;
+      padding: 4px;
+      width:96%;
+
+      img {
+        width: 80px;
+        height: 80px;
+        border-radius: 5px;
+        flex: 2;
+      }
+
+      &-info {
+        margin-left: $spacing-md;
+        flex: 3;
+      }
+
+      &-title {
+        font-weight: 600;
+        font-size: 20px;
+        text-transform: capitalize;
+      }
+
+      &-price {
+        margin:$spacing-sm 0;
+      } 
+
+      &-quantity {
+        font-size: 14px;
+      }
+
+      &-input {
+        display: flex;
+        width: 45%;
+        position: relative;
+       
+        button {
+          position: absolute;
+        }
+        .up {
+          right: 5px;
+        }
+
+        input {
+          width: 100%;
+          text-align: center;
+        }
+
+        .down {
+          left: 5px;
+        }
+       
+      }    
+
+      &-total {
+        font-size: 22px;
+        border-bottom: 1px solid rgba($color: #000000, $alpha: 0.3);        
+        height: 20vh;
+        padding: $spacing-sm $spacing-lg;
+
+        h4 {
+          margin-bottom: $spacing-lg;
+        }
+
+        p {
+          font-weight: 500;
+        }
+      }
+
+      &-button {
+        padding: $spacing-md 0;        
+        display: flex;       
+        justify-content: center;
+        align-items: center;
+        height: 15vh;
+      
+        a {
+          @include button;
+          width: 50%;
+          text-decoration: none;
+          height: 8vh;
+          text-align: center;
+          line-height: 40px;
+        }
+      }
+    }
+
+  }
+  
+}
+
+
+
+
+
+ 

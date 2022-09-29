@@ -1,0 +1,53 @@
+@import "./globalStyle/variable.scss";
+
+*, 
+*::before, *::after {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $ubuntu-font;
+  color:$text;
+  font-size: 18px;
+}
+
+button {
+  //reset to default
+  font-family: inherit;
+  outline: none;
+  border: none;
+  background: none;
+  letter-spacing: inherit;
+  color: inherit;
+  font-size: inherit;
+  text-align: inherit;
+  padding: 0;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input {
+  outline: none;
+}
+@include respond(xl) { 
+  
+}
+@include respond(md) { 
+  body {
+   font-size: 20px;
+  }
+}
+@include respond(sm) { 
+  body {
+    font-size: 20px;
+  }
+}
+
+
