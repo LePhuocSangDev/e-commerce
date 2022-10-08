@@ -4,28 +4,25 @@ import { AiOutlineLogin } from "react-icons/ai";
 import { TbLock } from "react-icons/tb";
 import { CgProfile } from "react-icons/cg";
 import { Link } from "react-router-dom";
-import { deleteUser, login, register } from "../../features/apiCall";
+import { deleteUser, login, logout, register } from "../../features/apiCall";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+const schema = yup
+  .object({
+    username: yup.string().min(6).max(20).required(),
+    email: yup.string().email("Email invalid").required(),
+    password: yup.string().min(4).max(20).required(),
+  })
+  .required();
 
 const RegisterPage = () => {
-  const schema = yup
-    .object({
-      username: yup.string().min(4).max(20).required(),
-      email: yup.string().email("Email invalid").required(),
-      password: yup.string().min(4).max(20).required(),
-    })
-    .required();
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+  } = useForm({ resolver: yupResolver(schema) });
 
   const { userInfo, newUser, isFetching, error } = useSelector(
     (state) => state.user
@@ -50,11 +47,6 @@ const RegisterPage = () => {
       });
   }, [errors]);
 
-  const handleRegister = (data) => {
-    register(dispatch, data);
-    console.log(data);
-  };
-
   return (
     <div className="login">
       <h2>Register</h2>
@@ -62,7 +54,7 @@ const RegisterPage = () => {
         <i className="login__icon">
           <AiOutlineLogin />
         </i>
-        <form onSubmit={handleSubmit(handleRegister)}>
+        <form onSubmit={handleSubmit((data) => register(dispatch, data))}>
           <div className="login__input">
             <i>
               <CgProfile />

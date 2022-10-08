@@ -72,7 +72,9 @@ const Navbar = () => {
             <a href="">Sản phẩm hôm nay</a>
           </li>
           <li>
-            <a href="">Trang của tôi</a>
+            <Link to="/profile" href="">
+              Trang của tôi
+            </Link>
           </li>
         </ul>
       </div>
@@ -89,37 +91,30 @@ const Navbar = () => {
         </button>
 
         <div className="logo">
-          <Link to="/">
-            <img src={logo}></img>
-          </Link>
+          <Link to="/"></Link>
         </div>
-        {/* <ul className="menu">
+        <ul className="menu">
           <li>
             <Link to="/" href="">
-              Trang Chủ
+              Hàng mới
             </Link>
           </li>
           <li>
             <Link to="/" href="">
-              Shop
+              Giày nam
             </Link>
           </li>
           <li>
             <Link to="/" href="">
-              Về Chúng Tôi
+              Giày nữ
             </Link>
           </li>
           <li>
             <Link to="/" href="">
-              Liên Hệ
+              Khuyến mãi
             </Link>
           </li>
-          <li>
-            <Link to="/" href="">
-              Mạng Xã Hội
-            </Link>
-          </li>
-        </ul> */}
+        </ul>
         {/* mobile */}
         {/* {showMenu && (
           <ul className="menu">
@@ -180,7 +175,7 @@ const Navbar = () => {
             {showUserOptions && (
               <ul className="user-options__list">
                 <li>
-                  <Link to="/">Profile</Link>
+                  <Link to="/profile">Profile</Link>
                 </li>
                 <li>
                   <Link to="/admin">Admin</Link>

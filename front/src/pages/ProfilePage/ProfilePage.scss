@@ -1,0 +1,58 @@
+@import "../../globalStyle/variable.scss";
+
+.profile {
+max-width: 1200px;
+margin: $spacing-lg auto;
+width: 70%; 
+height: 50vh;
+
+
+  h4 {
+    font-size: 30px;
+  }
+
+  &-container {
+    padding-top: $spacing-lg;
+  }
+
+  &-nav {
+    display: flex;
+    gap: $spacing-lg;
+    flex:1;
+    button:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .update-profile {
+    display: none;
+    div {
+      display: flex;
+      gap: 32px;
+      padding: $spacing-md 0 ;
+
+      label{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+          p {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+          }
+
+          input {
+            padding: 8px 4px;
+          }
+      }
+    }
+
+    .save-btn {
+      @include button;
+      outline: none;
+      border: none;
+      float: right;
+    }
+  }
+}
