@@ -14,13 +14,13 @@ const ProductsRow = ({ title, type, products }) => {
           <h2>{title}</h2>
           <div className="categories">
             {categories.map((c) => (
-              <Link to={`/products/${c.name}`} key={c.name}>
-                <div className="category">
+              <div className="category">
+                <Link to={`/products/${c.name}`} key={c.name}>
                   <img src={c.img} alt="/" />
 
                   <p>{c.name}</p>
-                </div>
-              </Link>
+                </Link>
+              </div>
             ))}
           </div>
         </div>

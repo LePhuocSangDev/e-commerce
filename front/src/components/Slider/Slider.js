@@ -19,12 +19,12 @@ const Slider = () => {
     <div className="slider">
       <img src={sliderImg[currentIndex].img} alt="/" />
       <div className="slider-desc">
-        <h4>Tracking Item</h4>
+        <h4>Sản phẩm nổi bật</h4>
         <h2>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus,
           ex.
         </h2>
-        <button>Shop Now</button>
+        <button>Tìm hiểu ngay</button>
       </div>
     </div>
   );

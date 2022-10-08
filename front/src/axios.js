@@ -19,8 +19,7 @@ export const publicRequest = axios.create({
 
 export const addressRequest = axios.create({
   baseURL: "https://online-gateway.ghn.vn/shiip/public-api/master-data",
-  // headers: { token: process.env.REACT_APP_BASE_URL },
-  headers: { token: "d3cc4fa0-35c9-11ed-8008-c673db1cbf27" },
+  headers: { token: process.env.REACT_APP_GHT_TOKEN },
 });
 export const userRequest = axios.create({
   baseURL: BASE_URL,

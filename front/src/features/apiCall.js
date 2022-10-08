@@ -41,6 +41,7 @@ import {
   createOrderStart,
   createOrderSuccess,
 } from "./orderSlice";
+import { toast } from "react-toastify";
 
 export const login = async (dispatch, user) => {
   dispatch(logInStart());
@@ -85,6 +86,7 @@ export const deleteUser = async (dispatch, id) => {
   try {
     const res = await userRequest.delete(`/users/${id}`);
     dispatch(deleteUserSuccess(id));
+    toast.error(res.data, { toastId: "toast-delete" });
   } catch (error) {
     dispatch(deleteUserError());
   }
@@ -105,6 +107,7 @@ export const deleteProduct = async (dispatch, id) => {
   try {
     const res = await userRequest.delete(`/products/${id}`);
     dispatch(deleteSuccess(id));
+    toast.error(res.data, { toastId: "toast-delete" });
   } catch (error) {
     dispatch(deleteError());
   }

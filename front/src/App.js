@@ -23,6 +23,7 @@ import AdminOrders from "./admin/adminPage/AdminOrders";
 
 import AdminLayout from "./layout/AdminLayout";
 import NotFound from "./components/NotFound/NotFound";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
 function App() {
   const theme = useSelector(selectTheme);
@@ -89,6 +90,7 @@ function App() {
                 path="/checkout/step3"
                 element={<CheckoutPage type="step3" />}
               ></Route>
+              <Route path="/profile" element={<ProfilePage />}></Route>
             </Route>
           </Routes>
         </>

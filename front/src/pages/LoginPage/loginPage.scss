@@ -62,10 +62,16 @@
     margin:$spacing-sm 0;
     text-align: center;
     border: none;
+    padding: $spacing-sm 0;
+    font-size: 18px;
   }
 
   &__register {
     margin:$spacing-sm 0;
+    a {
+      display: inline;
+    }
+    
   }
 
   &__others {

@@ -25,9 +25,9 @@ const HomePage = () => {
           <ScrollToTop />
           <Slider />
           <Widget />
-          <ProductsRow products={products} title="categories" type="category" />
-          <ProductsRow products={products} title="Trending Items" />
-          <ProductsRow products={products} title="Best Seller" />
+          <ProductsRow products={products} title="PHÂN LOẠI" type="category" />
+          <ProductsRow products={products} title="GIÀY HOT NHẤT" />
+          <ProductsRow products={products} title="GIÀY MỚI NHẤT" />
           <Widget size="sm" />
         </div>
       )}

@@ -14,6 +14,16 @@ const AdminHomePage = () => {
         <AdminWidget />
       </Box>
       <AdminChart />
+      <AdminChart />
+      <AdminChart />
+      <AdminChart />
+      <AdminChart />
+      <AdminChart />
+      <AdminChart />
+      <AdminChart />
+      <AdminChart />
+      <AdminChart />
+      <AdminChart />
     </Stack>
   );
 };

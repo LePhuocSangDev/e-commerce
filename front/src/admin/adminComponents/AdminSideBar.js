@@ -1,16 +1,18 @@
 import * as React from "react";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import IconButton from "@mui/material/IconButton";
 import { Box } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
+import PeopleIcon from "@mui/icons-material/People";
+import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
+import GradeIcon from '@mui/icons-material/Grade';
 
 const AdminSideBar = ({ openMenu, toggle }) => {
   const handleMenu = () => {
@@ -23,19 +25,26 @@ const AdminSideBar = ({ openMenu, toggle }) => {
         boxSizing: "border-box",
         borderRight: "1px solid rgba(0,0,0,0.2)",
         height: "100vh",
+        position: "sticky",
+        left: 0,
+        top: 0,
       }}
     >
       <Box
         sx={{
           height: "64px",
           display: "flex",
-          justifyContent: "center",
+          justifyContent: openMenu ? "flex-end" : "center",
           alignItems: "center",
         }}
       >
-        <IconButton onClick={handleMenu}>
-          {openMenu ? "X" : <MenuIcon />}
-        </IconButton>
+        {openMenu ? (
+          <IconButton onClick={handleMenu}>&#60;</IconButton>
+        ) : (
+          <IconButton onClick={handleMenu}>
+            <MenuIcon />
+          </IconButton>
+        )}
       </Box>
       <Divider />
       <List>
@@ -51,13 +60,16 @@ const AdminSideBar = ({ openMenu, toggle }) => {
           <ListItemIcon
             sx={{
               minWidth: 0,
-              mr: 3,
+              mr: openMenu ? 3 : 0,
               justifyContent: "center",
             }}
           >
-            <InboxIcon />
+            <HomeIcon />
           </ListItemIcon>
-          <ListItemText primary="Home" sx={{ opacity: openMenu ? 1 : 0 }} />
+          <ListItemText
+            primary="Home"
+            sx={{ display: openMenu ? "block" : "none" }}
+          />
         </ListItemButton>
         <ListItemButton
           component={RouterLink}
@@ -71,13 +83,16 @@ const AdminSideBar = ({ openMenu, toggle }) => {
           <ListItemIcon
             sx={{
               minWidth: 0,
-              mr: 3,
+              mr: openMenu ? 3 : 0,
               justifyContent: "center",
             }}
           >
-            <InboxIcon />
+            <PeopleIcon />
           </ListItemIcon>
-          <ListItemText primary="User" sx={{ opacity: openMenu ? 1 : 0 }} />
+          <ListItemText
+            primary="User"
+            sx={{ display: openMenu ? "block" : "none" }}
+          />
         </ListItemButton>
         <ListItemButton
           component={RouterLink}
@@ -91,13 +106,16 @@ const AdminSideBar = ({ openMenu, toggle }) => {
           <ListItemIcon
             sx={{
               minWidth: 0,
-              mr: 3,
+              mr: openMenu ? 3 : 0,
               justifyContent: "center",
             }}
           >
             <InboxIcon />
           </ListItemIcon>
-          <ListItemText primary="Products" sx={{ opacity: openMenu ? 1 : 0 }} />
+          <ListItemText
+            primary="Products"
+            sx={{ display: openMenu ? "block" : "none" }}
+          />
         </ListItemButton>
         <ListItemButton
           component={RouterLink}
@@ -111,13 +129,16 @@ const AdminSideBar = ({ openMenu, toggle }) => {
           <ListItemIcon
             sx={{
               minWidth: 0,
-              mr: 3,
+              mr: openMenu ? 3 : 0,
               justifyContent: "center",
             }}
           >
-            <InboxIcon />
+            <ProductionQuantityLimitsIcon />
           </ListItemIcon>
-          <ListItemText primary="Orders" sx={{ opacity: openMenu ? 1 : 0 }} />
+          <ListItemText
+            primary="Orders"
+            sx={{ display: openMenu ? "block" : "none" }}
+          />
         </ListItemButton>
       </List>
       <Divider />
