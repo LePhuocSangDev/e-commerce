@@ -2,8 +2,50 @@
  
  .app.dark {
       background-color: black; 
-
+      color: white;
       .nav {
+        .subnav {
+          background: white;
+          color: #000;
+          ul {
+            li {
+              a {
+                color: #000;
+              }}
+          }
+        }
+        .main-nav {
+          background: #000;
+          color: white;
+          .logo {
+            a {
+              background: url("../asset/img/logo2.jpg") no-repeat center;
+             background-size: cover;
+            }
+          }
+          .cart-search {
+            .user-options {
+              a {
+                span {
+                  color: white;
+                }
+              
+              }
+            }
+            .cart-search__quantity {
+              background-color: #fff;
+              color: #000;
+            }
+            .user-options__list {
+              color: #fff;
+              background-color: black;       
+              border: 1px solid rgba(255,255,255,0.4);   
+              &::after {
+                border-color:  transparent transparent white transparent;
+              } 
+            }
+          }
+        }
 
         .cart {
           background-color: black;
@@ -20,6 +62,14 @@
               color:black;
          
             }
+
+            &-button {
+              background-color: rgb(33, 32, 32); 
+              a {
+                background-color: $primary;
+              }
+            }
+            
            
           }
         }        
@@ -52,10 +102,22 @@
 
         .product__button.bg-black {
           background-color: orange;
+          color: white;
+        }
+        
+        .product__button {
+          background-color: white;
+          color: black;
         }
 
         .product__detail-color {
           border: 1px solid white
+        }
+      }
+
+      .product-card {
+        button {
+          background-color: $primary;         
         }
       }
 
@@ -70,15 +132,60 @@
           border: 1px solid rgba(253, 253, 253, 0.3);
 
           .input-quantity {
+            border: 1px solid white;
             button {
-              color: black;
+              color: white;
+            }
+          }
+        }
 
+        &__summary {
+          &-checkout {
+            a {
+              background: $primary;
             }
           }
         }
       }
 
       .list {
+        &__left {
+          .list__filter{
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+          }
+          .filter-type {
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+
+            .checkmark {
+              border: 1px solid #fff;
+            }
+          }
+
+          .price-slider {
+            color: #fff;
+          }
+          
+        }
+
+        .filter-type__size {
+          color: black;
+        }
+      }
+
+      .checkout {
+        &__pay-btn {
+          background-color: $primary;
+        }
+      }
+
+      .list {
         color: white;
       }
+
+      .admin {
+        background: white;
+        color: black
+      }
    }
+
+

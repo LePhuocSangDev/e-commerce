@@ -50,12 +50,15 @@ export const login = async (dispatch, user) => {
     dispatch(logInSuccess(res.data));
   } catch (err) {
     dispatch(logInError());
+    toast.error("Sai tài khoản hoặc mật khẩu, vui lòng nhập lại!", {
+      toastId: "toast-login-err",
+    });
   }
 };
 export const logout = async (dispatch) => {
   dispatch(logOutStart());
   try {
-    const res = await publicRequest.get("/auth/logout");
+    await publicRequest.get("/auth/logout");
     dispatch(logOutSuccess());
   } catch (err) {
     dispatch(logOutError());
@@ -117,8 +120,14 @@ export const createProduct = async (dispatch, productInfo) => {
   try {
     const res = await userRequest.post(`/products`, { ...productInfo });
     dispatch(createProductSuccess(res.data));
+    toast.success("Tạo sản phẩm thành công!", {
+      toastId: "toast-create-product",
+    });
   } catch (error) {
     dispatch(createProductError());
+    toast.error("Tạo sản phẩm thất bại, vui lòng kiểm tra lại!", {
+      toastId: "toast-create-error",
+    });
   }
 };
 export const updateProduct = async (dispatch, id, productInfo) => {

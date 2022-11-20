@@ -61,7 +61,7 @@ export const cartSlice = createSlice({
           total: 0,
         }
       );
-      state.total = total;
+      state.total = total.toLocaleString("vi-VN");
     },
     clearCartItem: (state, action) => {
       const existingIndex = state.products.findIndex(
@@ -70,7 +70,7 @@ export const cartSlice = createSlice({
       const foundProduct = state.products[existingIndex];
       state.products.splice(existingIndex, 1);
       state.total = state.total - foundProduct.price * foundProduct.quantity;
-      toast.error("Clear product successfully!", {
+      toast.error("Xóa khỏi giỏ hàng thành công!", {
         autoClose: 1000,
         toastId: "toast-clear",
       });

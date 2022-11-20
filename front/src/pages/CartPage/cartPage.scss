@@ -1,5 +1,6 @@
 @import "../../globalStyle/variable.scss";
 
+
 .cart-page {
   display: flex;
   padding:32px 64px;
@@ -22,7 +23,10 @@
    overflow-x: hidden;
    overflow-y: scroll;
    scrollbar-width: none;
-   ::-webkit-scrollbar { display: none; }
+   -ms-overflow-style: none; 
+   &::-webkit-scrollbar {
+     display: none;
+   }
   }
 
   &__product {
@@ -153,15 +157,40 @@
   &__more-info {
     margin: $spacing-md 0;
     color: rgb(255, 79, 79);
+    display: flex ;
+    align-items: center;;
+
 
     i {
       margin-right: $spacing-md;
-    }
+    };
   }
-
+  .text-note {
+    outline: none;
+    width: 100%;
+    display: block;
+   };
   &__summary {
   flex: 1;
 
+    &-coupon {
+      @include flexbox(unset,center);
+      position: relative;;
+      .coupon-input {
+        width: 100%;
+        padding: 8px 4px;
+      }
+      .coupon-button {
+        position: absolute;
+        right: 5px;
+        padding: 4px 8px;
+        background: #000;
+        color: white;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+
+    }
 
     &-detail {
       margin: $spacing-md 0;
@@ -174,12 +203,13 @@
       }
 
       span {
-        font-size: 24px;
+        font-size: 22px;
         text-transform: uppercase;
       }
 
       .country {
         text-decoration: underline;
+          
       }
     }
 

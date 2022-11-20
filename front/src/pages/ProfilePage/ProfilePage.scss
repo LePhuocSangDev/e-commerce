@@ -19,10 +19,13 @@ height: 50vh;
     display: flex;
     gap: $spacing-lg;
     flex:1;
+    margin-bottom: $spacing-md;
     button:hover {
       text-decoration: underline;
     }
   }
+
+  
 
   .update-profile {
     display: none;

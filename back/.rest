@@ -2,9 +2,9 @@ POST http://localhost:8000/api/auth/register
 Content-Type: application/json
 
 {
-  "username":"test15",
-  "password":"test15",
-  "email":"test15@gmail.com"  
+  "username":"admin",
+  "password":"admin",
+  "email":"admin@gmail.com"  
 }
 
 ### 
@@ -35,7 +35,7 @@ Content-Type: application/json
 
 
 ###
-DELETE http://localhost:8000/api/carts
+get http://localhost:8000/api/orders
 
 ###
 GET https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district

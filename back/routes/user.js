@@ -56,7 +56,7 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
   const query = req.query.new;
   try {
     const users = query
-      ? await User.find().sort({ _id: -1 }).limit(5) // để search với query new, ex: localhost5000/user?new=true 1:15:40
+      ? await User.find().sort({ _id: -1 }).limit(5) // to search with query
       : await User.find();
     res.status(200).json(users);
   } catch (err) {
@@ -72,7 +72,7 @@ router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
 
   try {
     const data = await User.aggregate([
-      { $match: { createdAt: { $gte: lastYear } } }, //condition
+      { $match: { createdAt: { $gte: lastYear } } },
       {
         $project: {
           month: { $month: "$createdAt" },
@@ -84,7 +84,7 @@ router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
           total: { $sum: 1 },
         },
       },
-    ]); //1:21:00
+    ]);
     res.status(200).json(data);
   } catch (err) {
     res.status(500).json(err);

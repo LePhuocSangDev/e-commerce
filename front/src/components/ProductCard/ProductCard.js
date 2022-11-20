@@ -13,7 +13,7 @@ const ProductCard = ({ product }) => {
   const handleAddProduct = () => {
     dispatch(addProduct(product));
     dispatch(getTotal());
-    toast.success("Add product successfully!", { toastId: "toast-add" });
+    toast.success("Thêm vào giỏ hàng thành công!", { toastId: "toast-add" });
   };
   return (
     <div className="product-card">
@@ -29,7 +29,9 @@ const ProductCard = ({ product }) => {
       </div>
       <div className="product__details">
         <Link to={`/product/${product._id}`}>{product.title}</Link>
-        <p>{product.price}đ</p>
+        <p>
+          {product.price.toLocaleString("vi-VN")} <span>đ</span>
+        </p>
         <button onClick={handleAddProduct}>Thêm vào giỏ hàng</button>
       </div>
     </div>

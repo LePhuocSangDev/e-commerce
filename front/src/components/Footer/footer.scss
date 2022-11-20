@@ -71,7 +71,9 @@
     background-color: black;
    
     .heading {
-      color: $primary
+      color: $primary;
+      height: 70px;
+      font-size: 22px;
     }
 
     ul {
@@ -81,7 +83,7 @@
 
       li {
         color: white;
-        font-size: 20px;
+        font-size: 15px;
         padding: 6px;
       }
     }
@@ -96,10 +98,15 @@
       
       .phone {
         font-size: 24px;
+      };
+      .email {
+        margin: 8px 0;
       }
+
     }
   }
 
-}  
+} 
+ 
 
 

@@ -31,7 +31,7 @@ const Product = () => {
       setProduct(res.data);
     };
     fetchData();
-  }, []);
+  }, [id]);
 
   const handleIncQuantity = () => {
     setQuantity((prev) => prev + 1);
@@ -51,8 +51,6 @@ const Product = () => {
     productQuantity: quantity,
   };
 
-  console.log(orderProduct);
-
   return (
     <div className="product__container">
       <div className="product__img">
@@ -69,19 +67,24 @@ const Product = () => {
             alt=""
           />
         </div>
-        <p className="product__img-desc">{product.desc}</p>
+        <div className="product__img-desc">
+          <h4>Mô tả sản phẩm</h4>
+          <p>{product.desc}</p>
+        </div>
       </div>
       <div className="product__wrapper">
         <div className="product">
           <h2 className="product__title">{product.title}</h2>
-          <p className="product__price">{product.price * quantity}VND</p>
+          <p className="product__price">
+            {(product.price * quantity).toLocaleString("vi-VN")} <span>đ</span>
+          </p>
           <div className="product__detail">
             <p className="product__detail-name">Size:</p>
             <select
               onChange={(e) => setSize(e.target.value)}
               value={size}
               style={{ width: "100%", padding: "8px" }}
-              defaultValues={size}
+              defaultvalues={size}
               name="Size"
               id=""
             >
@@ -92,12 +95,11 @@ const Product = () => {
           </div>
           <div className="product__detail">
             <p className="product__detail-name">
-              Color:{" "}
-              {color.toUpperCase() || <span>Please choose your color!</span>}
+              Color: {color.toUpperCase() || <span>Vui lòng chọn màu!</span>}
             </p>
             <div className="product__detail-color-wrapper">
               {product.color?.map((c) => (
-                <label className="filter-type__colors-wrapper">
+                <label key={c} className="filter-type__colors-wrapper">
                   <input
                     type="radio"
                     name="color"
@@ -129,7 +131,7 @@ const Product = () => {
             </div>
           </div>
           <div className="product__detail">
-            <p className="product__detail-name">So luong</p>
+            <p className="product__detail-name">Số lượng:</p>
             <div className="product__detail-input">
               <button onClick={handleDecQuantity}>-</button>
               <input
@@ -145,14 +147,14 @@ const Product = () => {
             disabled={color === "" ? true : false}
             onClick={handleAddProduct}
           >
-            Them vao gio hang
+            Thêm vào giỏ hàng
           </button>
           <Link
             to="/cart"
             onClick={handleAddProduct}
-            className="product__button  bg-black"
+            className="product__button bg-black"
           >
-            mua ngay
+            Mua ngay
           </Link>
           <div className="product__desc">
             <div className="product__desc-title">

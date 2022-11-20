@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./slider.scss";
 import { sliderImg } from "../../data";
+import { Link } from "react-router-dom";
 
 const Slider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -15,16 +16,17 @@ const Slider = () => {
       clearInterval(interval);
     };
   }, []);
+  const handleSlider = (e) => {
+    setCurrentIndex(e.target.value);
+  };
   return (
     <div className="slider">
       <img src={sliderImg[currentIndex].img} alt="/" />
       <div className="slider-desc">
-        <h4>Sản phẩm nổi bật</h4>
-        <h2>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus,
-          ex.
-        </h2>
-        <button>Tìm hiểu ngay</button>
+        <button value="0" onClick={handleSlider}></button>
+        <button value="1" onClick={handleSlider}></button>
+        <button value="2" onClick={handleSlider}></button>
+        <button value="3" onClick={handleSlider}></button>
       </div>
     </div>
   );
