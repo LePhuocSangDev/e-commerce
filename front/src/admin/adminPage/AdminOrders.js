@@ -79,7 +79,7 @@ export default function Products() {
   return (
     <Box>
       <Typography variant="h4" gutterBottom>
-        Product - Management
+        User's orders
       </Typography>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <Box

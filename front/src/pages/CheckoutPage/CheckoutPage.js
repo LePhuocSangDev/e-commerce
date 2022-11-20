@@ -38,7 +38,9 @@ const CheckoutPage = ({ type }) => {
   const [districtId, setDistrictId] = useState();
   const [wards, setWards] = useState([]);
   const [methodInfo, setMethodInfo] = useState({});
-  console.log(orderInfo);
+
+  const [couponError, setCouponError] = useState(false);
+  const [disabledSelect, setDisabledSelect] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,6 +81,9 @@ const CheckoutPage = ({ type }) => {
   const handleProvince = (e) => {
     handleAddress(e);
     province && setProvinceId(province.options[province.selectedIndex].id);
+    e.target.value === "default"
+      ? setDisabledSelect(true)
+      : setDisabledSelect(false);
   };
   const handleDistrict = (e) => {
     handleAddress(e);
@@ -101,14 +106,13 @@ const CheckoutPage = ({ type }) => {
     userInfo,
     methodInfo,
   };
-  console.log(allOrderInfo);
   return (
     <div className="checkout">
       {type === "step1" && (
         <div className="checkout-left">
-          <h4 className="checkout__heading">Thong tin giao hang</h4>
+          <h4 className="checkout__heading">Thông tin giao hàng:</h4>
           <span>
-            Ban da co tai khoan? <Link to="/login">Dang nhap</Link>
+            Bạn đã có tài khoản? <Link to="/login">Đăng nhập</Link>
           </span>
           <form className="checkout__form" action="">
             <input
@@ -116,7 +120,7 @@ const CheckoutPage = ({ type }) => {
               onChange={(e) => setName(e.target.value)}
               name="name"
               className="checkout__form-name"
-              placeholder="Ho va ten"
+              placeholder="Họ và tên"
             />
 
             <div className="checkout__form-container">
@@ -133,7 +137,7 @@ const CheckoutPage = ({ type }) => {
                 name="phone"
                 onChange={(e) => setPhone(e.target.value)}
                 className="checkout__form-phone"
-                placeholder="So Dien Thoai"
+                placeholder="Số Điện Thoại"
               />
             </div>
 
@@ -142,7 +146,7 @@ const CheckoutPage = ({ type }) => {
               name="street"
               onChange={handleAddress}
               type="text"
-              placeholder="Vui long nhap so nha va ten duong noi ban o!"
+              placeholder="Vui lòng nhập số nhà và tên đường nơi bạn ở"
             />
             <div className="checkout__select">
               <select
@@ -151,7 +155,9 @@ const CheckoutPage = ({ type }) => {
                 name="province"
                 placeholder="Tinh thanh"
               >
-                <option value="default">Vui Long Chon Tinh!</option>
+                {address.province === "" && (
+                  <option value="default">Vui lòng chọn tỉnh</option>
+                )}
                 {provinces.map((province) => (
                   <option
                     value={province?.ProvinceName}
@@ -167,8 +173,11 @@ const CheckoutPage = ({ type }) => {
                 onChange={handleDistrict}
                 name="district"
                 defaultValue="default"
+                disabled={disabledSelect}
               >
-                <option value="default">Vui Long Chon Huyen!</option>
+                {address.district === "" && (
+                  <option value="default">Vui lòng chọn huyện</option>
+                )}{" "}
                 {districts.map((district) => (
                   <option
                     value={district?.DistrictName}
@@ -184,8 +193,11 @@ const CheckoutPage = ({ type }) => {
                 name="ward"
                 placeholder="Quan/Huyen"
                 defaultValue="default"
+                disabled={disabledSelect}
               >
-                <option value="default">Vui Long Chon Xa!</option>
+                {address.ward === "" && (
+                  <option value="default">Vui lòng chọn xã</option>
+                )}
                 {wards.map((ward) => (
                   <option key={ward?.WardCode} value={ward?.WardName}>
                     {ward.WardName}
@@ -195,21 +207,21 @@ const CheckoutPage = ({ type }) => {
             </div>
           </form>
           <Link href="" to="/checkout/step2" className="checkout__pay-btn">
-            Tiep tuc den phuong thuc thanh toan
+            Tiếp tục
           </Link>
         </div>
       )}
       {type === "step2" && (
         <div className="checkout-step2">
-          <h4 className="checkout-step2__heading">Phuong thuc van chuyen</h4>
+          <h4 className="checkout-step2__heading">Phương thức vận chuyển:</h4>
           <select
             onChange={handleMethodInfo}
             defaultValue="Destination"
             className="checkout-step2__delivery"
             name="delivery"
           >
-            <option value="Destination">Giao Hang Tan noi</option>
-            <option value="POST">Buu dien</option>
+            <option value="Destination">Giao hàng tận nơi</option>
+            <option value="POST">Bưu điện</option>
           </select>
           <select
             onChange={handleMethodInfo}
@@ -217,13 +229,13 @@ const CheckoutPage = ({ type }) => {
             defaultValue="COD"
             name="payment"
           >
-            <option value="COD">Thanh toan khi giao hang(COD)</option>
-            <option value="VISA">Thanh toan bang the visa/mastercard</option>
-            <option value="E-WALLET">Thanh toan bang ZaloPay, Momo</option>
+            <option value="COD">Thanh toán khi giao hàng (COD)</option>
+            <option value="VISA">Thanh toán bằng thẻ visa/mastercard</option>
+            <option value="E-WALLET">Thanh toán bằng ZaloPay, Momo</option>
           </select>
           <div className="checkout-step2__btn">
             <Link href="" to="/checkout">
-              Quay Lai Thong Tin Giao Hang
+              Quay lại thông tin giao hàng
             </Link>
             <Link
               href=""
@@ -234,7 +246,7 @@ const CheckoutPage = ({ type }) => {
                 dispatch(deleteCart());
               }}
             >
-              Hoan Tat Don Hang
+              Hoàn Tất Đơn Hàng
             </Link>
           </div>
         </div>
@@ -253,22 +265,22 @@ const CheckoutPage = ({ type }) => {
                 }}
               />
               <div>
-                <h4>Dat hang thanh cong</h4>
-                <p>Ma don hang: {orderInfo.orderCode}</p>
-                <p>Cam on ban da mua hang</p>
+                <h4>Đặt hàng thành công!</h4>
+                <p>Mã đơn hàng: {orderInfo.orderCode}</p>
+                <p>Cảm ơn bạn đã mua hàng!</p>
               </div>
             </div>
             <div className="checkout-step3__info">
               <div className="checkout-step3__order-info">
-                <h4>Thong Tin Don Hang</h4>
+                <h4>Thông tin đơn hàng</h4>
                 <p>
-                  Name: <span>{name}</span>
+                  Tên: <span>{name}</span>
                 </p>
                 <p>
-                  Phone: <span>{phone && phone}</span>
+                  Số điện thoại: <span>{phone && phone}</span>
                 </p>
                 <p>
-                  Address:{" "}
+                  Địa chỉ:{" "}
                   <span>
                     {address &&
                       `${address.street} ${address.ward} ${address.district}  ${address.province}`}
@@ -276,18 +288,18 @@ const CheckoutPage = ({ type }) => {
                 </p>
               </div>
               <div className="checkout-step3__methods-info">
-                <h4>Phuong thuc thanh toan</h4>
+                <h4>Phương thức thanh toán:</h4>
                 <p>{methodInfo.payment && methodInfo.payment}</p>
-                <h4>Phuong thuc van chuyen</h4>
+                <h4>Phương thức vận chuyển:</h4>
                 <p>{methodInfo.delivery && methodInfo.delivery}</p>
               </div>
             </div>
             <div className="checkout-step3__btn">
               <Link href="" to="/checkout">
-                Lien he Chung Toi
+                Liên hệ chúng tôi
               </Link>
               <Link href="" to="/" className="checkout-step2__btn-finish">
-                Tiep tuc mua hang
+                Tiếp tục mua hàng
               </Link>
             </div>
           </div>
@@ -295,24 +307,38 @@ const CheckoutPage = ({ type }) => {
       <div className="cart-page__summary">
         <h4 className="cart-page__title">Order summary</h4>
         <div className="cart-page__summary-detail">
-          <input
-            type="text"
-            className="coupon-input"
-            placeholder="Please Enter your coupon"
-          />
+          <div className="cart-page__summary-coupon">
+            <input
+              type="text"
+              className="coupon-input"
+              placeholder="Vui lòng nhập mã khuyến mãi"
+              onChange={() => setCouponError(false)}
+            />
+            <button
+              onClick={() => setCouponError(true)}
+              className="coupon-button"
+            >
+              Nhập
+            </button>
+          </div>
+          {couponError && <p style={{ color: "red" }}>Mã không đúng!</p>}
           <p>
-            Subtotal
-            <span>{total}</span>
+            Phí ban đâu:
+            <span>
+              {total} <span>đ</span>
+            </span>
           </p>
           <p>
-            Shipping
-            <span>Free</span>
+            Phí vận chuyển
+            <span>Miễn phí</span>
           </p>
-          <p className="country">Country</p>
+          <p className="country">Vietnam</p>
         </div>
         <p className="cart-page__summary-total">
-          Total
-          <span>{total}</span>
+          Tổng phí:
+          <span>
+            {total} <span>đ</span>
+          </span>
         </p>
       </div>
     </div>

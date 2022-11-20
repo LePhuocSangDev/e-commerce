@@ -4,7 +4,7 @@
  
   border: 0.5px solid rgba($color: #000000, $alpha: 0.2);
   border-radius: 10px;
-  height: 300px;
+  height: auto;
   
   &:hover {
     opacity: 0.8
@@ -56,13 +56,13 @@
     text-align: center;
     display: flex;
     flex-direction: column;
+    gap: $spacing-sm;
     justify-content: space-evenly;
 
     a {
       text-decoration: none;
       text-transform: capitalize;
       font-weight: 700;
-     padding: $spacing-sm $spacing-md;
      cursor: pointer;
      font-size: 20px;
      color: black;
@@ -70,14 +70,12 @@
     }
     
 
-    p {
-      padding-bottom: 8px;
-    }
-
     button {
       @include button;
-      width: 100%;  
-      padding: 10px 0;   
+      width: 94%;  
+      padding: 8px 0; 
+      margin:0 auto;  
+      font-size: 15px;
     }
   }
 

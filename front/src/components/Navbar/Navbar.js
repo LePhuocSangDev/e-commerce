@@ -96,28 +96,33 @@ const Navbar = () => {
         <ul className="menu">
           <li>
             <Link to="/" href="">
+              Trang chủ
+            </Link>
+          </li>
+          <li>
+            <Link to="/products/new" href="">
               Hàng mới
             </Link>
           </li>
           <li>
-            <Link to="/" href="">
+            <Link to="/products/men" href="">
               Giày nam
             </Link>
           </li>
           <li>
-            <Link to="/" href="">
+            <Link to="/products/women" href="">
               Giày nữ
             </Link>
           </li>
           <li>
-            <Link to="/" href="">
+            <Link to="/products/bestseller" href="">
               Khuyến mãi
             </Link>
           </li>
         </ul>
         {/* mobile */}
-        {/* {showMenu && (
-          <ul className="menu">
+        {showMenu && (
+          <ul className="mobile-menu">
             <button
               onClick={() => setShowMenu(false)}
               className="mobile-menu__close"
@@ -125,32 +130,30 @@ const Navbar = () => {
               X
             </button>
             <li>
-              <Link to="/" href="">
-                Trang Chủ
+              <Link to="/products/new" onClick={() => setShowMenu(false)}>
+                Hàng mới
               </Link>
             </li>
             <li>
-              <Link to="/" href="">
-                Shop
+              <Link to="/products/men" onClick={() => setShowMenu(false)}>
+                Giày nam
               </Link>
             </li>
             <li>
-              <Link to="/" href="">
-                Về Chúng Tôi
+              <Link to="/products/women" onClick={() => setShowMenu(false)}>
+                Giày nữ
               </Link>
             </li>
             <li>
-              <Link to="/" href="">
-                Liên Hệ
-              </Link>
-            </li>
-            <li>
-              <Link to="/" href="">
-                Mạng Xã Hội
+              <Link
+                to="/products/bestseller"
+                onClick={() => setShowMenu(false)}
+              >
+                Khuyến mãi
               </Link>
             </li>
           </ul>
-        )} */}
+        )}
         <div className="cart-search">
           <div className="user-options">
             {userInfo ? (
@@ -161,27 +164,29 @@ const Navbar = () => {
                 <i>
                   <CgProfile />
                 </i>
-                {userInfo.username}
+                <span>{userInfo.username}</span>
               </button>
             ) : (
               <Link to="/login" className="user-options__avatar">
                 <i>
                   <CgProfile />
                 </i>
-                Log in
+                <span>Đăng nhập</span>
               </Link>
             )}
 
             {showUserOptions && (
               <ul className="user-options__list">
                 <li>
-                  <Link to="/profile">Profile</Link>
+                  <Link to="/profile">Trang cá nhân</Link>
                 </li>
+                {userInfo.isAdmin && (
+                  <li>
+                    <Link to="/admin">Trang quản lý</Link>
+                  </li>
+                )}
                 <li>
-                  <Link to="/admin">Admin</Link>
-                </li>
-                <li>
-                  <a onClick={handleLogout}>Log out</a>
+                  <a onClick={handleLogout}>Đăng xuất</a>
                 </li>
               </ul>
             )}
@@ -191,7 +196,9 @@ const Navbar = () => {
             <i>
               <AiOutlineShoppingCart />
             </i>
-            {cartItems.length > 0 && <span>{cartItems.length}</span>}
+            {cartItems.length > 0 && (
+              <span className="cart-search__quantity">{cartItems.length}</span>
+            )}
           </Link>
           <Link to="/search" className="cart-search__avatar">
             <i>
@@ -200,7 +207,8 @@ const Navbar = () => {
           </Link>
         </div>
       </div>
-      <div className="bottom-nav">
+      {/* Add this feature later */}
+      {/* <div className="bottom-nav">
         <Link to="/">Trang Chủ </Link>
         <i>
           <FaGreaterThan />
@@ -210,14 +218,14 @@ const Navbar = () => {
           <FaGreaterThan />
         </i>
         <Link to="/">Address</Link>
-      </div>
+      </div> */}
       {closeCart || (
         <div className="cart">
           <p className="cart__header">
             <i onClick={() => setCloseCart(true)}>
               <FaGreaterThan />
             </i>
-            Cart
+            Giỏ hàng
           </p>
           <div className="cart__items">
             {cartItems.map((item) => (
@@ -226,10 +234,13 @@ const Navbar = () => {
                 <div className="cart__item-info">
                   <h4 className="cart__item-title">{item.title}</h4>
                   <p className="cart__item-price">
-                    {item.price * item.productQuantity}d
+                    {(item.price * item.productQuantity).toLocaleString(
+                      "vi-VN"
+                    )}
+                    <span className="currency">đ</span>
                   </p>
                   <p className="cart__item-quantity">
-                    Quantity: {item.productQuantity}
+                    Số lượng: {item.productQuantity}
                   </p>
                 </div>
 
@@ -238,12 +249,14 @@ const Navbar = () => {
             ))}
           </div>
           <div className="cart__item-total">
-            <h4>Subtotal:</h4>
-            <p>{total}</p>
+            <h4>Tổng giá trị:</h4>
+            <p>
+              {total} <span className="currency">đ</span>
+            </p>
           </div>
           <div className="cart__item-button">
             <Link onClick={() => setCloseCart(true)} to="/cart">
-              View Cart
+              Xem giỏ hàng
             </Link>
           </div>
         </div>

@@ -19,9 +19,11 @@ const CartPage = () => {
   const dispatch = useDispatch();
   const { products: cartItems } = useSelector(selectCart);
   const { total } = useSelector(selectCart);
+  const [showEnterCoupon, setShowEnterCoupon] = useState(false);
+  const [showNote, setShowNote] = useState(false);
 
-  const [newColor, setNewColor] = useState("");
-  const [newSize, setNewSize] = useState("");
+  // const [newColor, setNewColor] = useState("");
+  // const [newSize, setNewSize] = useState("");
 
   const handleIncQuantity = (id) => {
     dispatch(incQuantity(id));
@@ -60,7 +62,7 @@ const CartPage = () => {
   return (
     <div className="cart-page">
       <div className="cart-page__detail">
-        <h4 className="cart-page__title">My Cart</h4>
+        <h4 className="cart-page__title">Giỏ hàng của tôi</h4>
         <div className="cart-page__products">
           {cartItems.map((item) => (
             <div key={item._id} className="cart-page__product">
@@ -68,7 +70,9 @@ const CartPage = () => {
                 <img src={item.img.url} alt="" />
                 <div className="cart-page__product-desc">
                   <h4>{item.title}</h4>
-                  <p className="product-price">{item.price}d</p>
+                  <p className="product-price">
+                    {item.price.toLocaleString("vi-VN")} <span>đ</span>
+                  </p>
                   <p>
                     Size:
                     {handleRenderValue(item.size)}
@@ -95,7 +99,10 @@ const CartPage = () => {
                     +
                   </button>
                 </div>
-                <span>{item.price * item.productQuantity}$</span>
+                <span>
+                  {(item.price * item.productQuantity).toLocaleString("vi-VN")}
+                  <span className="currency">đ</span>
+                </span>
                 <button
                   onClick={() => dispatch(clearCartItem(item))}
                   className="input-quantity__close"
@@ -106,43 +113,64 @@ const CartPage = () => {
             </div>
           ))}
         </div>
-        <p className="cart-page__more-info">
+        <button
+          onClick={() => setShowEnterCoupon((prev) => !prev)}
+          className="cart-page__more-info"
+        >
           <i>
             <RiCouponLine />
           </i>
-          Enter a promote code
-        </p>
-        <p className="cart-page__more-info">
+          Nhập mã khuyến mãi
+        </button>
+        {showEnterCoupon && (
+          <div className="cart-page__summary-coupon">
+            <input
+              type="text"
+              className="coupon-input"
+              placeholder="Please Enter your coupon"
+            />
+            <button className="coupon-button">Nhập</button>
+          </div>
+        )}
+        <button
+          onClick={() => setShowNote((prev) => !prev)}
+          className="cart-page__more-info"
+        >
           <i>
             <BiNotepad />
           </i>
-          Add a note
-        </p>
+          Thêm ghi chú
+        </button>
+        {showNote && <textarea rows={4} className="text-note" />}
       </div>
       <div className="cart-page__summary">
-        <h4 className="cart-page__title">Order summary</h4>
+        <h4 className="cart-page__title">Tóm tắt đơn hàng</h4>
         <div className="cart-page__summary-detail">
           <p>
-            Subtotal
-            <span>{total}</span>
+            Phí ban đầu:
+            <span>
+              {total} <span>đ</span>
+            </span>
           </p>
           <p>
-            Shipping
-            <span>Free</span>
+            Phí vận chuyển:
+            <span>Miễn phí</span>
           </p>
           <p className="country">VietNam</p>
         </div>
         <p className="cart-page__summary-total">
-          Total
-          <span>{total} $</span>
+          Tổng phí:
+          <span>
+            {total} <span>đ</span>
+          </span>
         </p>
         <div className="cart-page__summary-checkout">
-          <Link to="/checkout">Checkout</Link>
+          <Link to="/checkout">Thanh toán</Link>
           <p>
             <i>
               <TbLock />
             </i>
-            Secure Checkout
+            Thanh toán an toàn
           </p>
         </div>
       </div>

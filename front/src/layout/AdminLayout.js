@@ -10,11 +10,11 @@ import { useToggle } from "../hooks/useToggle";
 const AdminLayout = () => {
   const [openMenu, toggle] = useToggle(false);
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box className="admin" sx={{ display: "flex" }}>
       <AdminSideBar openMenu={openMenu} toggle={toggle} />
       <Stack maxWidth="xl" sx={{ width: `${openMenu ? "80vw" : "95vw"}` }}>
         <AdminHeader />
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" sx={{ paddingTop: "16px" }}>
           <Outlet />
         </Container>
       </Stack>

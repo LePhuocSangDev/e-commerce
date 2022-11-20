@@ -54,7 +54,12 @@ const RegisterPage = () => {
         <i className="login__icon">
           <AiOutlineLogin />
         </i>
-        <form onSubmit={handleSubmit((data) => register(dispatch, data))}>
+        <form
+          onSubmit={handleSubmit((data) => {
+            register(dispatch, data);
+            console.log(data);
+          })}
+        >
           <div className="login__input">
             <i>
               <CgProfile />
@@ -63,6 +68,7 @@ const RegisterPage = () => {
               {...register("username")}
               type="text"
               value={username}
+              name="username"
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter Your User Name"
             />
@@ -77,6 +83,7 @@ const RegisterPage = () => {
             <input
               {...register("email")}
               type="text"
+              name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter Your Email Address"
@@ -92,6 +99,7 @@ const RegisterPage = () => {
             <input
               {...register("password")}
               type="password"
+              name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter Your Password"

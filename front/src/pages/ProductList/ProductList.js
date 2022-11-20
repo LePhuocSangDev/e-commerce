@@ -3,27 +3,24 @@ import ProductCard from "../../components/ProductCard/ProductCard";
 import "./productList.scss";
 import { AiOutlineCheck, AiOutlineSearch } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import ScrollToTop from "../../components/ScrollToTop";
 import { selectProduct } from "../../features/productSlice";
 import { getProduct } from "../../features/apiCall";
-import { useToggle } from "../../hooks/useToggle";
 import { Link, useLocation } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
-import { styled } from "@mui/material";
 
 const ProductList = ({ type }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const cat = location.pathname.split("/")[2];
   const { products, isFetching } = useSelector(selectProduct);
-  const [showFilter, setShowFilter] = useState(true);
+  const [showFilter, setShowFilter] = useState(false);
   const [search, setSearch] = useState("");
   const [productsSearch, setProductsSearch] = useState([]);
   const [productsFilter, setProductsFilter] = useState([]);
   const [filters, setFilters] = useState({});
-  const [price, setPrice] = useState([5, 1000]);
+  const [price, setPrice] = useState([5, 10000000]);
   const [sort, setSort] = useState("");
   const [showCollection, setShowCollection] = useState(false);
   const [showPrice, setShowPrice] = useState(false);
@@ -36,10 +33,11 @@ const ProductList = ({ type }) => {
   useEffect(() => {
     getProduct(dispatch);
   }, [dispatch]);
+  console.log(productsSearch);
   useEffect(() => {
     if (search) {
       const searchResult = products.filter((product) =>
-        product.title.includes(search.toLowerCase())
+        product.title.toLowerCase().includes(search.toLowerCase())
       );
       setProductsSearch(searchResult);
     }
@@ -54,7 +52,7 @@ const ProductList = ({ type }) => {
           item.price <= price[1]
       )
     );
-  }, [search, filters, price]);
+  }, [search, filters, price, products]);
   useEffect(() => {
     if (cat) {
       const productsCat = products.filter((product) =>
@@ -62,12 +60,16 @@ const ProductList = ({ type }) => {
       );
       setProductsFilter(productsCat);
     }
-  }, [cat]);
+  }, [cat, products]);
 
   useEffect(() => {
     if (sort === "newest") {
       setProductsFilter((prev) =>
-        [...prev].sort((a, b) => a.createdAt - b.createdAt)
+        [...prev].sort((a, b) => {
+          var dateA = new Date(a.createdAt);
+          var dateB = new Date(b.createdAt);
+          return dateA - dateB;
+        })
       );
     } else if (sort === "priceLow") {
       setProductsFilter((prev) => [...prev].sort((a, b) => a.price - b.price));
@@ -75,7 +77,12 @@ const ProductList = ({ type }) => {
       setProductsFilter((prev) => [...prev].sort((a, b) => b.price - a.price));
     }
   }, [sort]);
-
+  const clearFilter = () => {
+    setPrice([5, 10000000]);
+    setSort("");
+    setFilters({});
+    setShowFilter(true);
+  };
   return (
     <>
       {isFetching ? (
@@ -137,17 +144,15 @@ const ProductList = ({ type }) => {
                     {showCollection && (
                       <ul className="filter-type__list">
                         <li>All</li>
-                        {["Shoe", "Clothes", "Drug", "Tablet"].map(
-                          (collection) => (
-                            <Link
-                              key={collection}
-                              to={`/products/${collection.toLowerCase()}`}
-                              href="/"
-                            >
-                              {collection}
-                            </Link>
-                          )
-                        )}
+                        {["New", "Men", "Women", "Kid"].map((collection) => (
+                          <Link
+                            key={collection}
+                            to={`/products/${collection.toLowerCase()}`}
+                            href="/"
+                          >
+                            {collection}
+                          </Link>
+                        ))}
                       </ul>
                     )}
                   </div>
@@ -193,8 +198,12 @@ const ProductList = ({ type }) => {
                           "yellow",
                           "purple",
                           "blue",
+                          "green",
                         ].map((color) => (
-                          <label className="filter-type__colors-wrapper">
+                          <label
+                            key={color}
+                            className="filter-type__colors-wrapper"
+                          >
                             <input
                               type="radio"
                               name="color"
@@ -243,15 +252,19 @@ const ProductList = ({ type }) => {
                     {showPrice && (
                       <Box sx={{ width: "100%", position: "relative" }}>
                         <Slider
-                          sx={{ color: "black" }}
+                          className="price-slider"
                           value={price}
                           min={0}
-                          max={1000}
+                          max={10000000}
                           onChange={(e) => setPrice(e.target.value)}
                           valueLabelDisplay="off"
                         />
-                        <span className="price-min">{price[0]}$</span>
-                        <span className="price-max">{price[1]}$</span>
+                        <span className="price-min">
+                          {price[0].toLocaleString("vi-VN")}đ
+                        </span>
+                        <span className="price-max">
+                          {price[1].toLocaleString("vi-VN")}đ
+                        </span>
                       </Box>
                     )}
                   </div>
@@ -263,11 +276,13 @@ const ProductList = ({ type }) => {
                     >
                       Close
                     </button>
-                    <button className="apply-filter">Apply</button>
                     <button
-                      onClick={() => setFilters({})}
-                      className="clear-filter"
+                      onClick={() => setShowFilter(false)}
+                      className="apply-filter"
                     >
+                      Apply
+                    </button>
+                    <button onClick={clearFilter} className="clear-filter">
                       Clear filter
                     </button>
                   </div>

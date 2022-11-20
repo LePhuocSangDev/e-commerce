@@ -14,8 +14,10 @@ const ProductsRow = ({ title, type, products }) => {
           <h2>{title}</h2>
           <div className="categories">
             {categories.map((c) => (
-              <div className="category">
-                <Link to={`/products/${c.name}`} key={c.name}>
+              <div className="category" key={c.name}>
+                <Link
+                  to={`/products/${c.name.toLowerCase().split(" ").join("")}`} // To make words like "Best seller" become "bestseller"
+                >
                   <img src={c.img} alt="/" />
 
                   <p>{c.name}</p>
@@ -26,14 +28,14 @@ const ProductsRow = ({ title, type, products }) => {
         </div>
       ) : (
         <div className="products__container">
-          <h2>{title}</h2>
+          <div className="products__heading">
+            <h2>{title}</h2>
+            <Link to="/products">Xem tất cả &#62;&#62; </Link>
+          </div>
           <div className="cards">
             {productsRender.map((product) => (
               <ProductCard product={product} key={product._id} />
             ))}
-          </div>
-          <div className="cards-btn">
-            <Link to="/products/shoe">Xem Them</Link>
           </div>
         </div>
       )}

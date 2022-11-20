@@ -10,6 +10,22 @@
     letter-spacing: 1px;
     margin: $spacing-lg 0;
   }
+  .products__heading {
+    position: relative;
+    a {
+     color: $text2;
+     font-size: 18px;
+     font-weight: normal;
+     line-height: 35px;
+     width: 130px;
+     position: absolute;
+     bottom: -30px;
+     right: 0;
+     text-align: center;
+
+    }
+  }
+  
 
   .cards {
     display: grid;
@@ -17,19 +33,7 @@
     grid-template-columns: repeat(4,1fr);  
   
   }
-  .cards-btn {
-    text-align: center;
-    margin-top: $spacing-lg;
-    display: flex;
-    justify-content: center;
-    a {
-      @include button;
-      width: 20%;
-      margin: 0, auto;
-      min-width: 135px;
-      max-width: 170px;
-    }
-  }
+  
 
   .categories {
     display: grid;
@@ -39,22 +43,37 @@
    
    .category {
       width: 100%;
-      height: 70vh;
+      height: 50vh;
+      min-height: 30vh;
+      position: relative;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      p {
+        position: absolute;
+        border-radius: 5px;
+        padding: 2px;
+        background: #fff;
+        color: black;
+        font-weight: normal;
+        bottom: 10px;
+        left: 10px;
+      }
      
    }
     
     a {
-      text-decoration: none;
-      
-      
+      text-decoration: none;    
       display: block;
       position: relative;
-      height: inherit;
+      height: 100%;
     }
 
     img {
       width: 100%; 
-      height: inherit;
+      height:auto;
       position: absolute;
       left: 0;    
       &:hover{
@@ -62,16 +81,6 @@
       };
     }
     
-    p {
-      margin: $spacing-md 0;
-      font-weight: 600;
-      color: black;
-      text-transform: capitalize;
-      position: absolute;
-      bottom: 5%;
-      left: 20px;
-
-    }
   }
 }
 

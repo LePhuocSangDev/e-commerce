@@ -8,22 +8,10 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Link as RouterLink } from "react-router-dom";
-import {
-  Box,
-  Button,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import {
-  deleteProduct,
-  deleteUser,
-  getProduct,
-  getUsers,
-} from "../../features/apiCall";
+import { deleteUser, getUsers } from "../../features/apiCall";
 import { useDispatch, useSelector } from "react-redux";
-import { publicRequest } from "../../axios";
 import { selectUser } from "../../features/userSlice";
 
 const columns = [
@@ -33,14 +21,14 @@ const columns = [
 
   {
     id: "action",
-    label: "STATUS",
+    label: "ACTIONS",
     minWidth: 170,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
 ];
 
-export default function Products() {
+export default function AdminUsers() {
   const dispatch = useDispatch();
   const { users } = useSelector(selectUser);
   console.log(users);
@@ -49,7 +37,7 @@ export default function Products() {
 
   useEffect(() => {
     getUsers(dispatch);
-  }, []);
+  }, [dispatch]);
   const handleDelete = (id) => {
     deleteUser(dispatch, id);
   };
@@ -66,7 +54,7 @@ export default function Products() {
   return (
     <Box>
       <Typography variant="h4" gutterBottom>
-        Product - Management
+        User - Management
       </Typography>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <Box
