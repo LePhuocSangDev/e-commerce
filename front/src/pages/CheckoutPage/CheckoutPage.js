@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
@@ -99,10 +98,11 @@ const CheckoutPage = ({ type }) => {
     email,
     address,
   };
+  const totalNum = total.toLocaleString().replace(/\D/g, ""); // convert 100.000 back to 100000
   const allOrderInfo = {
     userId: user?._id,
     products,
-    amount: total,
+    amount: totalNum,
     userInfo,
     methodInfo,
   };
@@ -216,22 +216,27 @@ const CheckoutPage = ({ type }) => {
           <h4 className="checkout-step2__heading">Phương thức vận chuyển:</h4>
           <select
             onChange={handleMethodInfo}
-            defaultValue="Destination"
+            defaultValue="Giao hàng tận nơi"
             className="checkout-step2__delivery"
             name="delivery"
           >
-            <option value="Destination">Giao hàng tận nơi</option>
-            <option value="POST">Bưu điện</option>
+            <option value="Giao hàng tận nơi">Giao hàng tận nơi</option>
+            <option value="Bưu điện">Bưu điện</option>
           </select>
+          <h4 className="checkout-step2__heading">Phương thức thanh toán:</h4>
           <select
             onChange={handleMethodInfo}
             className="checkout-step2__payment"
-            defaultValue="COD"
+            defaultValue="Thanh toán khi giao hàng"
             name="payment"
           >
-            <option value="COD">Thanh toán khi giao hàng (COD)</option>
-            <option value="VISA">Thanh toán bằng thẻ visa/mastercard</option>
-            <option value="E-WALLET">Thanh toán bằng ZaloPay, Momo</option>
+            <option value="Thanh toán khi giao hàng">
+              Thanh toán khi giao hàng (COD)
+            </option>
+            <option value="Thẻ ngân hàng">
+              Thanh toán bằng thẻ visa/mastercard
+            </option>
+            <option value="Ví điện tử">Thanh toán bằng ZaloPay, Momo</option>
           </select>
           <div className="checkout-step2__btn">
             <Link href="" to="/checkout">

@@ -1,40 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./loginPage.scss";
 import { AiOutlineLogin } from "react-icons/ai";
 import { TbLock } from "react-icons/tb";
 import { CgProfile } from "react-icons/cg";
 import { Link } from "react-router-dom";
-import { login, register } from "../../features/apiCall";
+import { login } from "../../features/apiCall";
 import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { ToastContainer, toast } from "react-toastify";
 import { selectUser } from "../../features/userSlice";
 import Loader from "../../components/Loader/Loader";
 
 const schema = yup
   .object({
-    username: yup.string().min(5).max(20).required(),
-    password: yup.string().min(4).max(20).required(),
+    username: yup
+      .string()
+      .min(5, "Vui lòng nhập tối thiểu 5 kí tự")
+      .max(25, "Vui lòng nhập tối đa 25 kí tự")
+      .required("Vui lòng không để trống"),
+    password: yup
+      .string()
+      .min(5, "Vui lòng nhập tối thiểu 5 kí tự")
+      .max(25, "Vui lòng nhập tối đa 25 kí tự")
+      .required("Vui lòng không để trống"),
   })
   .required();
 
 const LoginPage = () => {
   const {
+    resetField,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
   });
   const dispatch = useDispatch();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const { isFetching } = useSelector(selectUser);
 
   const handleLogin = (data) => {
     login(dispatch, data);
+    resetField("password");
   };
   return (
     <>
@@ -54,10 +65,8 @@ const LoginPage = () => {
                 </i>
                 <input
                   type="text"
-                  value={username}
                   {...register("username")}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="User name"
+                  placeholder="Tài khoản"
                 />
               </div>
               <p className="error-msg">{errors.username?.message}</p>
@@ -67,14 +76,12 @@ const LoginPage = () => {
                 </i>
                 <input
                   type="password"
-                  value={password}
                   {...register("password")}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Password"
+                  placeholder="Mật khẩu"
                 />
               </div>
               <p className="error-msg">{errors.password?.message}</p>
-              <label htmlFor="">
+              <label htmlFor="" className="keep-login">
                 <input type="checkbox" /> Keep me login
               </label>
               <input type="submit" className="login__button" value="Login" />
@@ -85,8 +92,8 @@ const LoginPage = () => {
             </p>
             <div className="login__others">
               Or Login Using:
-              <a href="#"></a>
-              <a href="#"></a>
+              <a href="/"></a>
+              <a href="/"></a>
             </div>
           </div>
         </div>

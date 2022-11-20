@@ -1,9 +1,5 @@
 const Product = require("../models/Product");
-const {
-  verifyToken,
-  verifyTokenAndAuthorization,
-  verifyTokenAndAdmin,
-} = require("./verifyToken");
+const { verifyTokenAndAdmin } = require("./verifyToken");
 const cloudinary = require("cloudinary");
 
 const router = require("express").Router();

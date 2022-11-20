@@ -15,7 +15,7 @@ const ProductList = ({ type }) => {
   const dispatch = useDispatch();
   const cat = location.pathname.split("/")[2];
   const { products, isFetching } = useSelector(selectProduct);
-  const [showFilter, setShowFilter] = useState(false);
+  const [showFilter, setShowFilter] = useState(true);
   const [search, setSearch] = useState("");
   const [productsSearch, setProductsSearch] = useState([]);
   const [productsFilter, setProductsFilter] = useState([]);
@@ -31,9 +31,12 @@ const ProductList = ({ type }) => {
     window.scrollTo(0, 0);
   }, []);
   useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []); // For Filter responsiveness
+
+  useEffect(() => {
     getProduct(dispatch);
   }, [dispatch]);
-  console.log(productsSearch);
   useEffect(() => {
     if (search) {
       const searchResult = products.filter((product) =>
@@ -46,7 +49,7 @@ const ProductList = ({ type }) => {
       products.filter(
         (item) =>
           Object.entries(filters).every(([key, value]) =>
-            item[key].includes(value.toLowerCase())
+            item[key].includes(value.toString().toLowerCase())
           ) &&
           item.price >= price[0] &&
           item.price <= price[1]
@@ -83,6 +86,11 @@ const ProductList = ({ type }) => {
     setFilters({});
     setShowFilter(true);
   };
+
+  const handleResize = () => {
+    window.innerWidth <= 1200 ? setShowFilter(false) : setShowFilter(true);
+  };
+
   return (
     <>
       {isFetching ? (
@@ -103,7 +111,7 @@ const ProductList = ({ type }) => {
             </div>
           ) : (
             <div className="list__heading">
-              <h2>Shop Our Collection</h2>
+              <h2>Danh mục sản phẩm</h2>
               <p>I'm a paragraph. Click here to add your own text.</p>
             </div>
           )}
@@ -115,22 +123,22 @@ const ProductList = ({ type }) => {
             }}
           >
             <div className="sort-products">
-              <label htmlFor="sort">Sort by:</label>
+              <label htmlFor="sort">Sắp xếp:</label>
               <select
                 onChange={(e) => setSort(e.target.value)}
                 id="sort"
                 className="sort-products__select"
               >
                 Sort by:
-                <option value="newest">Newest</option>
-                <option value="priceHigh">Price: High to Low</option>
-                <option value="priceLow">Price: Low to High</option>
+                <option value="newest">Mới nhất</option>
+                <option value="priceHigh">Giá: Cao đến Thấp</option>
+                <option value="priceLow">Price: Thấp đến Cao</option>
               </select>
             </div>
 
             <div className="list__container">
               {showFilter && (
-                <div className="list__left">
+                <div className={`list__left ${showFilter && "show-filter"}`}>
                   <p className="list__filter">Filter by</p>
                   <div className="filter-type">
                     <p>
@@ -174,11 +182,12 @@ const ProductList = ({ type }) => {
                         action=""
                         className="filter-type__size"
                       >
-                        <option>X</option>
-                        <option>S</option>
-                        <option>Xl</option>
-                        <option>M</option>
-                        <option>L</option>
+                        <option>39</option>
+                        <option>40</option>
+                        <option>41</option>
+                        <option>42</option>
+                        <option>43</option>
+                        <option>44</option>
                       </select>
                     )}
                   </div>

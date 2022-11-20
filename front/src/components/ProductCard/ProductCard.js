@@ -1,5 +1,4 @@
 import React from "react";
-import { AiOutlineShoppingCart, AiOutlineEye } from "react-icons/ai";
 import "./productCard.scss";
 import { useDispatch } from "react-redux";
 import { addProduct, getTotal } from "../../features/cartSlice";
@@ -24,7 +23,7 @@ const ProductCard = ({ product }) => {
         </Link>
 
         <div className="product__icons">
-          <Link to={`/product/${product._id}`}>QUICK VIEW</Link>
+          <Link to={`/product/${product._id}`}>XEM NHANH</Link>
         </div>
       </div>
       <div className="product__details">

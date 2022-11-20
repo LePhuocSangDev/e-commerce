@@ -40,6 +40,9 @@
 
   &__left {
     flex: 2;
+    &.showFilter {
+      display: none;
+    }
 
     .list__filter {
       font-size: 28px;

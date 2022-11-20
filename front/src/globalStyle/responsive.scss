@@ -280,6 +280,9 @@
   }
   
   @include respond(sm) {
+    select {
+      color: black;
+    }
     .nav {
       .subnav {
         display: none;
@@ -340,6 +343,9 @@
         }
 
         .cart-search {
+          a {
+            padding: 0;
+          }
           .user-options {
             &__avatar {
               span {
@@ -350,7 +356,11 @@
           &__icon {
             display: none;
           }
+          &__quantity {
+            top: -10px;
+            right: -8px;
 
+          }
           
         }
       }
@@ -532,24 +542,27 @@
 
       &__input {
         height: 48px;
-        margin: 24px 0;;
 
         input {
           height: 100%;
         }
       }
 
+      .keep-login {
+        margin: $spacing-sm 0;
+      }
+
      &__button {
-      margin: $spacing-md 0;
+      margin: $spacing-sm 0;
      }
 
      &__register {
-      margin: 24px 0;
+      margin: 18px 0;
      }
 
       &__others {
         gap: $spacing-md;
-        margin: $spacing-lg 0;
+        margin: $spacing-md 0;
       }
       
 
@@ -596,13 +609,20 @@
           color: transparent;
         }
       }
-     
+      
       &__heading {
         margin: 32px 0;
       }
 
+      .sort-products {
+        select {
+          color: black;
+        }
+      }
+
       .list__container {
         flex-direction: column;
+        
   
         .list__filter {
           padding: 16px ;
@@ -610,6 +630,12 @@
        
         &__heading {
           margin: 32px 0;
+        }
+
+        .sort-products {
+          select {
+            color: black;
+          }
         }
        
   
@@ -653,6 +679,10 @@
         .checkout__form {
           .checkout__select {
             flex-direction: column;
+            select {
+              padding: 8px 4px;
+              color: black;
+            }
           }
         }
 
@@ -661,16 +691,37 @@
         display: none;
       }
       &-step2 {
+        &__delivery {
+          padding: 8px 4px;
+          color: black;
+        }
         &__btn {
           flex-direction: columns;
           gap: 16px;
           a {
             width: 100%;
             text-align: center;
+            font-size: 13px;
           }
         }
       }
+      &-step3 {
+        font-size: 18px;
+        &__btn {
+         a {
+          font-size: 15px;
+         }}}
     }
+
+    .not-found {
+      h4 {
+        font-size: 20px;
+      }
+      p {
+        font-size: 16px;
+      }
+    }
+
   }
 }
 

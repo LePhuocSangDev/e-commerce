@@ -10,10 +10,8 @@ import {
   getTotal,
   incQuantity,
   selectCart,
-  updateCart,
 } from "../../features/cartSlice";
 import { Link } from "react-router-dom";
-import { deleteCart } from "../../features/cartSlice";
 
 const CartPage = () => {
   const dispatch = useDispatch();
@@ -21,10 +19,6 @@ const CartPage = () => {
   const { total } = useSelector(selectCart);
   const [showEnterCoupon, setShowEnterCoupon] = useState(false);
   const [showNote, setShowNote] = useState(false);
-
-  // const [newColor, setNewColor] = useState("");
-  // const [newSize, setNewSize] = useState("");
-
   const handleIncQuantity = (id) => {
     dispatch(incQuantity(id));
     dispatch(getTotal());
@@ -34,14 +28,6 @@ const CartPage = () => {
     dispatch(getTotal());
   };
   const handleRenderValue = (value) => {
-    // const handleUpdateColor = (e, item) => {
-    //   setNewColor(e.target.value);
-    //   dispatch(updateCart(item._id, newColor));
-    // };
-    // const handleUpdateSize = (e, item) => {
-    //   setNewSize(e.target.value);
-    //   dispatch(updateCart(item._id, newSize));
-    // };
     if (typeof value === "object") {
       return (
         <select className="cart-page__product-size" onChange={() => {}}>
