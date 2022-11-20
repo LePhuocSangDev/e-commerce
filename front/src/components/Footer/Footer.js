@@ -11,14 +11,14 @@ const Footer = () => {
             <i>
               <AiOutlineMail />
             </i>
-            Get Latest Update & News
+            Đăng kí nhận tin và cập nhật
           </p>
           <p className="footer__text2">
-            Get all the latest information on Events & Offers
+            Nhận tất cả thông tin về khuyến mãi và sản phẩm mới
           </p>
         </div>
         <div className="footer__input">
-          <input type="text" placeholder="Your email address" />
+          <input type="text" placeholder="Nhập email của bạn" />
           <button>Đăng kí</button>
         </div>
       </div>
@@ -34,7 +34,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className="footer__col">
-          <h2 className="heading">Chính sách mua hàng và bảo hành</h2>
+          <h2 className="heading">Chính sách mua hàng</h2>
           <ul>
             <li>Quy định chung</li>
             <li>Chính sách bảo mật thông tin</li>
@@ -44,7 +44,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className="footer__col">
-          <h2 className="heading">Thông tin LPS Tech</h2>
+          <h2 className="heading">Thông tin LPS Shoes</h2>
           <ul>
             <li>Giới thiệu</li>
             <li>Thông tin liên hệ</li>
@@ -59,7 +59,7 @@ const Footer = () => {
           <p className="address">
             123 Đường Võ Văn Tần, Phường 14, quận 3, thành phố Hồ Chí Minh
           </p>
-          <p className="email">lpstech@gmail.com</p>
+          <p className="email">lpsshoe@gmail.com</p>
           <p className="phone">1800 97 97 69</p>
         </div>
       </div>

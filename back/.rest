@@ -1,10 +1,10 @@
-POST http://localhost:8000/api/auth/register
+POST https://shop-vypc.onrender.com/api/auth/register
 Content-Type: application/json
 
 {
-  "username":"admin",
-  "password":"admin",
-  "email":"admin@gmail.com"  
+  "username":"test15",
+  "password":"test15",
+  "email":"test15@gmail.com"  
 }
 
 ### 

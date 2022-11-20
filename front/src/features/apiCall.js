@@ -11,9 +11,6 @@ import {
   deleteUserStart,
   deleteUserSuccess,
   deleteUserError,
-  logOUtStart,
-  logOUtSuccess,
-  logOUtError,
   logOutStart,
   logOutSuccess,
   logOutError,
@@ -70,8 +67,14 @@ export const register = async (dispatch, user) => {
   try {
     const res = await publicRequest.post("/auth/register", user);
     dispatch(registerSuccess(res.data));
+    toast.success("Tạo tại khoản thành công!", {
+      toastId: "toast-register-success",
+    });
   } catch (error) {
     dispatch(registerError());
+    toast.error("Có lỗi xảy ra, vui lòng thử lại sau!", {
+      toastId: "toast-register-error",
+    });
   }
 };
 //CRUD USER

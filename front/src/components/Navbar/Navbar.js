@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.scss";
-import logo from "../../asset/img/logo.PNG";
 import {
   AiFillFacebook,
   AiFillLinkedin,
@@ -33,7 +32,8 @@ const Navbar = () => {
   const handleClick = () => {
     theme === "light" ? dispatch(dark()) : dispatch(light());
   };
-  const handleLogout = () => {
+  const handleLogout = (e) => {
+    e.preventDefault();
     logout(dispatch);
     setShowUserOptions(false);
   };
@@ -66,10 +66,10 @@ const Navbar = () => {
             </button>
           </li>
           <li>
-            <a href="">Coupon</a>
+            <a href="/">Coupon</a>
           </li>
           <li>
-            <a href="">Sản phẩm hôm nay</a>
+            <a href="/products">Sản phẩm hôm nay</a>
           </li>
           <li>
             <Link to="/profile" href="">
@@ -186,7 +186,9 @@ const Navbar = () => {
                   </li>
                 )}
                 <li>
-                  <a onClick={handleLogout}>Đăng xuất</a>
+                  <a href="/" onClick={handleLogout}>
+                    Đăng xuất
+                  </a>
                 </li>
               </ul>
             )}

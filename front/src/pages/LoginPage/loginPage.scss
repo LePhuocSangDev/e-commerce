@@ -16,7 +16,7 @@
 
   &__container {
     margin: $spacing-lg auto;
-    width: 30%;  
+    width: 35%;  
     height: 80%; 
     border: 1px solid black;
     box-shadow: 3px 0px 15px #0b0a0a;
@@ -97,15 +97,16 @@
         background-size: cover;  
       }    
     }
-
-    .register__container {
-      
-    }
-
-   
+ 
   }
 }
 
 .error-msg {
-  color: red
+  color: red;
+  font-size: 13px;
+}
+
+.login__button.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }

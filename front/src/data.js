@@ -1,19 +1,24 @@
+import men from "./asset/img/HomePage-Img/men.jpg";
+import women from "./asset/img/HomePage-Img/women.jpg";
+import kid from "./asset/img/HomePage-Img/kid.jpg";
+import a from "./asset/img/HomePage-Img/new.jpg";
+
 export const categories = [
   {
     name: "New",
-    img: "https://static.nike.com/a/images/f_auto/dpr_1.4,cs_srgb/h_610,c_limit/b3be382f-2ea8-469a-b1c3-7bad9ed053db/nike-just-do-it.png",
+    img: a,
   },
   {
     name: "Men",
-    img: "https://static.nike.com/a/images/f_auto/dpr_1.4,cs_srgb/h_610,c_limit/cb91797a-6054-4201-8bee-c08700c83e47/nike-just-do-it.png",
+    img: men,
   },
   {
     name: "Women",
-    img: "https://static.nike.com/a/images/f_auto/dpr_1.4,cs_srgb/h_610,c_limit/b47f5049-1b86-4642-b50c-310ce59b5940/nike-just-do-it.png",
+    img: women,
   },
   {
     name: "Kid",
-    img: "https://static.nike.com/a/images/f_auto/dpr_1.4,cs_srgb/h_610,c_limit/44c84aa3-702f-49fd-80e0-a74258b9b0b6/nike-just-do-it.png",
+    img: kid,
   },
 ];
 

@@ -85,31 +85,3 @@
 
 .product-card:hover .product__icons {display: block}
 
-@include respond(xl) {
-
-}
-
-@include respond(md) {
-  .product__img {
-    height: 60%;
-   }
-   .product__details {
-    height: 40%;
-   }
-  
-}
-
-@include respond(sm) {
-  .product-card {
-    .product__img {
-      height: 60%
-      }
-      .product__details {
-      height: 40%;
-      }
-  }
-    
-
- 
- 
-}

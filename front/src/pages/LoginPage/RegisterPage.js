@@ -4,34 +4,48 @@ import { AiOutlineLogin } from "react-icons/ai";
 import { TbLock } from "react-icons/tb";
 import { CgProfile } from "react-icons/cg";
 import { Link } from "react-router-dom";
-import { deleteUser, login, logout, register } from "../../features/apiCall";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { register as registerUser } from "../../features/apiCall";
 import * as yup from "yup";
 const schema = yup
   .object({
-    username: yup.string().min(6).max(20).required(),
-    email: yup.string().email("Email invalid").required(),
-    password: yup.string().min(4).max(20).required(),
+    username: yup
+      .string()
+      .min(5, "Vui lòng nhập tối thiểu 5 kí tự")
+      .max(25, "Vui lòng nhập tối đa 25 kí tự")
+      .required("Vui lòng không để trống"),
+    email: yup
+      .string()
+      .email("Email không đúng chuẩn, ví dụ: youremail@example.com")
+      .required("Vui lòng không để trống"),
+    password: yup
+      .string()
+      .min(5, "Vui lòng nhập tối thiểu 5 kí tự")
+      .max(25, "Vui lòng nhập tối đa 25 kí tự")
+      .required("Vui lòng không để trống"),
   })
   .required();
 
 const RegisterPage = () => {
   const {
+    resetField,
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(schema) });
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+    },
+  });
 
-  const { userInfo, newUser, isFetching, error } = useSelector(
-    (state) => state.user
-  );
+  const { isFetching } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
   const [errorMsg, setErrorMsg] = useState({
     usernameError: "",
     emailError: "",
@@ -56,8 +70,10 @@ const RegisterPage = () => {
         </i>
         <form
           onSubmit={handleSubmit((data) => {
-            register(dispatch, data);
-            console.log(data);
+            registerUser(dispatch, data);
+            resetField("username");
+            resetField("email");
+            resetField("password");
           })}
         >
           <div className="login__input">
@@ -65,12 +81,10 @@ const RegisterPage = () => {
               <CgProfile />
             </i>
             <input
-              {...register("username")}
-              type="text"
-              value={username}
+              {...register("username", { required: true })}
               name="username"
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter Your User Name"
+              type="text"
+              placeholder="Tên tài khoản"
             />
           </div>
           {errorMsg.userNameError && (
@@ -81,12 +95,10 @@ const RegisterPage = () => {
               <CgProfile />
             </i>
             <input
-              {...register("email")}
+              {...register("email", { required: true })}
               type="text"
               name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter Your Email Address"
+              placeholder="Địa chỉ Email"
             />
           </div>
           {errorMsg.emailError && (
@@ -97,22 +109,26 @@ const RegisterPage = () => {
               <TbLock />
             </i>
             <input
-              {...register("password")}
+              {...register("password", { required: true })}
               type="password"
               name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter Your Password"
+              placeholder="Mật khẩu"
             />
           </div>
           {errorMsg.passwordError && (
             <p className="error-msg">{errors.password?.message}</p>
           )}
-          <input type="submit" value="Register" className="login__button" />
+          <input
+            type="submit"
+            className={`login__button ${isFetching && "disabled"}`}
+            name="Register"
+            value="Đăng kí"
+            disabled={isFetching}
+          />
         </form>
 
         <p className="login__register">
-          Have an Account? <Link to="/login">Login</Link>
+          Đã có tài khoản? <Link to="/login">Đăng nhập</Link>
         </p>
       </div>
     </div>
