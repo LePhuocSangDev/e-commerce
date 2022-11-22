@@ -79,9 +79,9 @@
           }
 
           a {
-            color: $text2;
-            &:hover {
-              opacity: 0.6;
+            &.collection-active {
+              color: black;
+              font-weight: 600;
             }
           }
 

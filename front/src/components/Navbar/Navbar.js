@@ -13,7 +13,7 @@ import { CgProfile } from "react-icons/cg";
 import { MdDarkMode } from "react-icons/md";
 import { FaGreaterThan } from "react-icons/fa";
 import { BsSun } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../features/userSlice";
 import { dark, selectTheme, light } from "../../features/themeSlice";
@@ -40,7 +40,7 @@ const Navbar = () => {
 
   useEffect(() => {
     dispatch(getTotal());
-  }, [total]);
+  }, [total, dispatch]);
 
   return (
     <div className="nav">
@@ -95,29 +95,49 @@ const Navbar = () => {
         </div>
         <ul className="menu">
           <li>
-            <Link to="/" href="">
+            <NavLink
+              className={({ isActive }) => (isActive ? "nav-active" : "")}
+              to="/"
+              href=""
+            >
               Trang chủ
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/products/new" href="">
+            <NavLink
+              className={({ isActive }) => (isActive ? "nav-active" : "")}
+              to="/products/new"
+              href=""
+            >
               Hàng mới
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/products/men" href="">
+            <NavLink
+              className={({ isActive }) => (isActive ? "nav-active" : "")}
+              to="/products/men"
+              href=""
+            >
               Giày nam
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/products/women" href="">
+            <NavLink
+              className={({ isActive }) => (isActive ? "nav-active" : "")}
+              to="/products/women"
+              href=""
+            >
               Giày nữ
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/products/bestseller" href="">
-              Khuyến mãi
-            </Link>
+            <NavLink
+              className={({ isActive }) => (isActive ? "nav-active" : "")}
+              to="/products/kid"
+              href=""
+            >
+              Trẻ em
+            </NavLink>
           </li>
         </ul>
         {/* mobile */}

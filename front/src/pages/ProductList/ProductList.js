@@ -5,13 +5,16 @@ import { AiOutlineCheck, AiOutlineSearch } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { selectProduct } from "../../features/productSlice";
 import { getProduct } from "../../features/apiCall";
-import { Link, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import { useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 
 const ProductList = ({ type }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const cat = location.pathname.split("/")[2];
   const { products, isFetching } = useSelector(selectProduct);
@@ -32,6 +35,7 @@ const ProductList = ({ type }) => {
   }, []);
   useEffect(() => {
     window.addEventListener("resize", handleResize);
+    window.innerWidth <= 1200 && setShowFilter(false);
   }, []); // For Filter responsiveness
 
   useEffect(() => {
@@ -51,17 +55,20 @@ const ProductList = ({ type }) => {
           Object.entries(filters).every(([key, value]) =>
             item[key].includes(value.toString().toLowerCase())
           ) &&
+          item.categories.toString().includes(cat) &&
           item.price >= price[0] &&
           item.price <= price[1]
       )
     );
-  }, [search, filters, price, products]);
+  }, [search, filters, price, products, cat]);
   useEffect(() => {
     if (cat) {
       const productsCat = products.filter((product) =>
         product.categories.toString().includes(cat)
       );
       setProductsFilter(productsCat);
+    } else {
+      setProductsFilter(products);
     }
   }, [cat, products]);
 
@@ -151,16 +158,60 @@ const ProductList = ({ type }) => {
                     </p>
                     {showCollection && (
                       <ul className="filter-type__list">
-                        <li>All</li>
-                        {["New", "Men", "Women", "Kid"].map((collection) => (
-                          <Link
+                        <li>
+                          <NavLink to="/products">All</NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            className={({ isActive }) =>
+                              isActive ? "collection-active" : ""
+                            }
+                            to="/products/new"
+                          >
+                            New
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            className={({ isActive }) =>
+                              isActive ? "collection-active" : ""
+                            }
+                            to="/products/men"
+                          >
+                            Men
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            className={({ isActive }) =>
+                              isActive ? "collection-active" : ""
+                            }
+                            to="/products/women"
+                          >
+                            Women
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            className={({ isActive }) =>
+                              isActive ? "collection-active" : ""
+                            }
+                            to="/products/kid"
+                          >
+                            Kid
+                          </NavLink>
+                        </li>
+                        {/* {["New", "Men", "Women", "Kid"].map((collection) => (
+                          <NavLink
                             key={collection}
                             to={`/products/${collection.toLowerCase()}`}
-                            href="/"
+                            className={({ isActive }) =>
+                              isActive ? "collection-active" : ""
+                            }
                           >
                             {collection}
-                          </Link>
-                        ))}
+                          </NavLink>
+                        ))} */}
                       </ul>
                     )}
                   </div>

@@ -55,7 +55,9 @@ const CartPage = () => {
               <div className="cart-page__product-container">
                 <img src={item.img.url} alt="" />
                 <div className="cart-page__product-desc">
-                  <h4>{item.title}</h4>
+                  <Link className="product-heading" to={`/product/${item._id}`}>
+                    {item.title}
+                  </Link>
                   <p className="product-price">
                     {item.price.toLocaleString("vi-VN")} <span>đ</span>
                   </p>

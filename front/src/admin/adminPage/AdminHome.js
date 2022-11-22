@@ -15,15 +15,6 @@ const AdminHomePage = () => {
       </Box>
       <AdminChart />
       <AdminChart />
-      <AdminChart />
-      <AdminChart />
-      <AdminChart />
-      <AdminChart />
-      <AdminChart />
-      <AdminChart />
-      <AdminChart />
-      <AdminChart />
-      <AdminChart />
     </Stack>
   );
 };

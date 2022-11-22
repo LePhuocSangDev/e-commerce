@@ -8,13 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Link as RouterLink } from "react-router-dom";
-import {
-  Box,
-  Button,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { deleteProduct, getProduct } from "../../features/apiCall";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,18 +18,17 @@ import axios from "axios";
 
 const columns = [
   { id: "id", label: "ID", minWidth: 170 },
-  { id: "image", label: "IMAGE", minWidth: 100 },
-  { id: "title", label: "TITLE", minWidth: 100 },
+  { id: "products", label: "PRODUCTS", minWidth: 100 },
   {
-    id: "price",
-    label: "PRICE($)",
+    id: "status",
+    label: "STATUS",
     minWidth: 170,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "action",
-    label: "STATUS",
+    id: "name",
+    label: "NAME",
     minWidth: 170,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
@@ -52,14 +45,14 @@ const columns = [
 export default function Products() {
   const dispatch = useDispatch();
   const { products } = useSelector(selectProduct);
-
+  const [orderInfo, setOrderInfo] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
     const fetchOrders = async () => {
       const { data } = await userRequest.get("/orders");
-      console.log(data);
+      setOrderInfo(data);
     };
     fetchOrders();
   }, []);
@@ -127,7 +120,7 @@ export default function Products() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {products
+              {orderInfo
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((product, index) => (
                   <TableRow
@@ -137,17 +130,10 @@ export default function Products() {
                     <TableCell component="th" scope="row" align="center">
                       {index + 1}
                     </TableCell>
+                    <TableCell align="center">{product.status}</TableCell>
+                    <TableCell align="center">{product.status}</TableCell>
                     <TableCell align="center">
-                      <img
-                        src={product.img.url}
-                        alt=""
-                        style={{ width: "100%", height: "10vh" }}
-                      />
-                    </TableCell>
-                    <TableCell align="center">{product.title}</TableCell>
-                    <TableCell align="center">{product.price}</TableCell>
-                    <TableCell align="center">
-                      {product.instock ? "In Stock" : "Sold out"}
+                      {product.userInfo.name}
                     </TableCell>
                     <TableCell align="center">
                       <Button

@@ -8,6 +8,7 @@
   height: 100vh;
   padding: $spacing-lg 0;
   color:white;
+  font-size: 16px;
   
   h2 {
     text-align: center;
@@ -17,10 +18,11 @@
   &__container {
     margin: $spacing-lg auto;
     width: 35%;  
-    height: 80%; 
+    height: 84%; 
     border: 1px solid black;
     box-shadow: 3px 0px 15px #0b0a0a;
     padding: 0 $spacing-md ;
+    position: relative;
   }
 
   &__icon {
@@ -63,13 +65,16 @@
     text-align: center;
     border: none;
     padding: $spacing-sm 0;
-    font-size: 18px;
+    font-size: inherit;
   }
 
   &__register {
     margin:$spacing-sm 0;
     a {
       display: inline;
+      color: yellow;
+      text-decoration: underline;
+
     }
     
   }

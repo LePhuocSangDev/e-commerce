@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Slider from "../components/Slider/Slider";
 import Widget from "../components/Widget/Widgets";
 import ProductsRow from "../components/ProductsRow/ProductsRow";
@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from "../features/apiCall";
 
 const HomePage = () => {
-  const { products, isFetching } = useSelector(selectProduct);
+  const { products } = useSelector(selectProduct);
   const dispatch = useDispatch();
   useEffect(() => {
     getProduct(dispatch);
@@ -16,7 +16,14 @@ const HomePage = () => {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <div>
+    <div
+      style={{
+        padding: "16px 0",
+        display: "flex",
+        gap: "16px",
+        flexDirection: "column",
+      }}
+    >
       <Slider />
       <Widget />
       <ProductsRow products={products} title="PHÂN LOẠI" type="category" />
