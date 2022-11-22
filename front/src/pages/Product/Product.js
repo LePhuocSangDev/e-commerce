@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./product.scss";
-import { Link, useLocation } from "react-router-dom";
+import { Link, redirect, useLocation, useNavigate } from "react-router-dom";
 import { publicRequest } from "../../axios";
 import { useSelector, useDispatch } from "react-redux";
 import { addProduct, getTotal, selectCart } from "../../features/cartSlice";
@@ -12,15 +12,15 @@ const Product = () => {
   const { products } = useSelector(selectCart);
   console.log(products);
   const [product, setProduct] = useState({});
-  const [size, setSize] = useState("M");
+  const [size, setSize] = useState("");
   const [color, setColor] = useState("");
   const [quantity, setQuantity] = useState(1);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname;
   const id = path.split("/")[2];
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -32,7 +32,6 @@ const Product = () => {
     };
     fetchData();
   }, [id]);
-
   const handleIncQuantity = () => {
     setQuantity((prev) => prev + 1);
   };
@@ -40,9 +39,27 @@ const Product = () => {
     quantity > 1 && setQuantity((prev) => prev - 1);
   };
   const handleAddProduct = () => {
-    dispatch(addProduct(orderProduct));
-    dispatch(getTotal());
-    toast.success("Add product successfully!", { toastId: "toast-add" });
+    if (orderProduct.size === "" || orderProduct.color === "") {
+      toast.error("Bạn cần chọn size và màu!", { toastId: "toast-error" });
+    } else {
+      dispatch(addProduct(orderProduct));
+      dispatch(getTotal());
+      toast.success("Add product successfully!", { toastId: "toast-add" });
+    }
+  };
+  const handleBuyNow = () => {
+    try {
+      if (orderProduct.size === "" || orderProduct.color === "") {
+        toast.error("Bạn cần chọn size và màu!", { toastId: "toast-error" });
+      } else {
+        dispatch(addProduct(orderProduct));
+        dispatch(getTotal());
+        toast.success("Add product successfully!", {
+          toastId: "toast-add",
+        });
+        navigate("/cart");
+      }
+    } catch (error) {}
   };
   const orderProduct = {
     ...product,
@@ -50,7 +67,7 @@ const Product = () => {
     color: color,
     productQuantity: quantity,
   };
-
+  console.log(orderProduct);
   return (
     <div className="product__container">
       <div className="product__img">
@@ -84,10 +101,10 @@ const Product = () => {
               onChange={(e) => setSize(e.target.value)}
               value={size}
               style={{ width: "100%", padding: "8px" }}
-              defaultvalues={size}
               name="Size"
               id=""
             >
+              {size === "" && <option value="">Vui lòng chọn size</option>}
               {product.size?.map((s) => (
                 <option key={s}>{s.toUpperCase()}</option>
               ))}
@@ -134,31 +151,19 @@ const Product = () => {
             <p className="product__detail-name">Số lượng:</p>
             <div className="product__detail-input">
               <button onClick={handleDecQuantity}>-</button>
-              <input
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-                type="text"
-              />
+              <span>{quantity}</span>
               <button onClick={handleIncQuantity}>+</button>
             </div>
           </div>
-          <button
-            className="product__button"
-            disabled={color === "" ? true : false}
-            onClick={handleAddProduct}
-          >
+          <button className="product__button" onClick={handleAddProduct}>
             Thêm vào giỏ hàng
           </button>
-          <Link
-            to="/cart"
-            onClick={handleAddProduct}
-            className="product__button bg-black"
-          >
+          <button onClick={handleBuyNow} className="product__button bg-primary">
             Mua ngay
-          </Link>
+          </button>
           <div className="product__desc">
             <div className="product__desc-title">
-              <h4>RETURN AND POLICY</h4>
+              <h4>CHÍNH SÁCH TRẢ HÀNG</h4>
               <span>+</span>
             </div>
             <p>
@@ -169,7 +174,7 @@ const Product = () => {
           </div>
           <div className="product__desc">
             <div className="product__desc-title">
-              <h4>RETURN AND POLICY</h4>
+              <h4>HỖ TRỢ KHÁCH HÀNG</h4>
               <span>+</span>
             </div>
             <p>

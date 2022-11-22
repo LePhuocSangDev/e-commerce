@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 import { categories } from "../../data";
 
 const ProductsRow = ({ title, type, products }) => {
-  const productsRender = [...products].splice(0, 8);
+  const productsRender = [...products].splice(0, 10);
 
   return (
     <>
       {type ? (
         <div className="products__container">
-          <h2>{title}</h2>
+          <h2 className="categories__heading">{title}</h2>
           <div className="categories">
             {categories.map((c) => (
               <div className="category" key={c.name}>

@@ -38,8 +38,14 @@
     &-container {
       @include flexbox(unset, unset, $spacing-md);
 
-      input {
+      div {
         width: 50%;
+        input {
+          width: 100%;
+        };
+        p {
+          padding-top: 8px;
+        }
       }
     }
 
@@ -133,7 +139,7 @@
 
     &__methods-info {
       p {
-        padding-bottom: 8px ;
+        padding: 8px 0 ;
       }
     }
 

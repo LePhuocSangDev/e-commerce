@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./loginPage.scss";
 import { AiOutlineLogin } from "react-icons/ai";
 import { TbLock } from "react-icons/tb";
@@ -6,7 +6,7 @@ import { CgProfile } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import { login } from "../../features/apiCall";
 import { useDispatch, useSelector } from "react-redux";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { selectUser } from "../../features/userSlice";
@@ -82,16 +82,21 @@ const LoginPage = () => {
               </div>
               <p className="error-msg">{errors.password?.message}</p>
               <label htmlFor="" className="keep-login">
-                <input type="checkbox" /> Keep me login
+                <input type="checkbox" /> Duy trì đăng nhập
               </label>
-              <input type="submit" className="login__button" value="Login" />
+              <input
+                type="submit"
+                className="login__button"
+                value="Đăng nhập"
+              />
             </form>
 
             <p className="login__register">
-              Forgot Password? New User? <Link to="/register">Register</Link>
+              Người dùng mới? <Link to="/register">Đăng kí</Link> hoặc{" "}
+              <Link to="/">Tiếp tục mua sắm</Link>
             </p>
             <div className="login__others">
-              Or Login Using:
+              Cách đăng nhập khác:
               <a href="/"></a>
               <a href="/"></a>
             </div>

@@ -46,20 +46,6 @@ const RegisterPage = () => {
   const { isFetching } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
-  const [errorMsg, setErrorMsg] = useState({
-    usernameError: "",
-    emailError: "",
-    passwordError: "",
-  });
-
-  useEffect(() => {
-    errors &&
-      setErrorMsg({
-        userNameError: errors.username?.message,
-        emailError: errors.email?.message,
-        passwordError: errors.password?.message,
-      });
-  }, [errors]);
 
   return (
     <div className="login">
@@ -87,9 +73,7 @@ const RegisterPage = () => {
               placeholder="Tên tài khoản"
             />
           </div>
-          {errorMsg.userNameError && (
-            <p className="error-msg">{errors.username?.message}</p>
-          )}
+          <p className="error-msg">{errors.username?.message}</p>
           <div className="login__input">
             <i>
               <CgProfile />
@@ -101,9 +85,8 @@ const RegisterPage = () => {
               placeholder="Địa chỉ Email"
             />
           </div>
-          {errorMsg.emailError && (
-            <p className="error-msg">{errors.email?.message}</p>
-          )}
+          <p className="error-msg">{errors.email?.message}</p>
+
           <div className="login__input">
             <i>
               <TbLock />
@@ -115,9 +98,7 @@ const RegisterPage = () => {
               placeholder="Mật khẩu"
             />
           </div>
-          {errorMsg.passwordError && (
-            <p className="error-msg">{errors.password?.message}</p>
-          )}
+          <p className="error-msg">{errors.password?.message}</p>
           <input
             type="submit"
             className={`login__button ${isFetching && "disabled"}`}
@@ -128,7 +109,8 @@ const RegisterPage = () => {
         </form>
 
         <p className="login__register">
-          Đã có tài khoản? <Link to="/login">Đăng nhập</Link>
+          Đã có tài khoản? <Link to="/login">Đăng nhập</Link> hoặc{" "}
+          <Link to="/">Trở lại trang chủ</Link>
         </p>
       </div>
     </div>

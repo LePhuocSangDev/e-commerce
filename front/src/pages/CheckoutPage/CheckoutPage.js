@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { addressRequest } from "../../axios";
 import Loader from "../../components/Loader/Loader";
 import { createOrder } from "../../features/apiCall";
@@ -9,9 +10,45 @@ import { deleteCart, selectCart } from "../../features/cartSlice";
 import { selectOrder } from "../../features/orderSlice";
 import { selectUser } from "../../features/userSlice";
 import "./CheckoutPage.scss";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup
+  .object({
+    name: yup
+      .string()
+      .min(5, "Vui lòng nhập tối thiểu 5 kí tự")
+      .max(25, "Vui lòng nhập tối đa 25 kí tự")
+      .required("Vui lòng không để trống"),
+    email: yup
+      .string()
+      .email("Email không đúng chuẩn, ví dụ: youremail@example.com")
+      .required("Vui lòng không để trống"),
+    street: yup
+      .string()
+      .min(5, "Vui lòng nhập tối thiểu 5 kí tự")
+      .max(25, "Vui lòng nhập tối đa 25 kí tự")
+      .required("Vui lòng không để trống"),
+    phone: yup
+      .string()
+      .min(8, "Vui lòng nhập tối thiểu 8 số")
+      .max(13, "Vui lòng nhập tối đa 13 số")
+      .required("Vui lòng không để trống"),
+  })
+  .required();
 
 const CheckoutPage = ({ type }) => {
+  const {
+    resetField,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const provinceRef = useRef();
   const districtRef = useRef();
   const province = provinceRef.current;
@@ -22,7 +59,8 @@ const CheckoutPage = ({ type }) => {
   const { products } = useSelector(selectCart);
   const total = useSelector((state) => state.cart.total);
 
-  const [phone, setPhone] = useState();
+  const [userData, setUserData] = useState({});
+  const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState({
@@ -36,7 +74,10 @@ const CheckoutPage = ({ type }) => {
   const [districts, setDistricts] = useState([]);
   const [districtId, setDistrictId] = useState();
   const [wards, setWards] = useState([]);
-  const [methodInfo, setMethodInfo] = useState({});
+  const [methodInfo, setMethodInfo] = useState({
+    delivery: "Giao hàng tận nơi",
+    payment: "Thanh toán khi giao hàng",
+  });
 
   const [couponError, setCouponError] = useState(false);
   const [disabledSelect, setDisabledSelect] = useState(true);
@@ -93,18 +134,42 @@ const CheckoutPage = ({ type }) => {
     setMethodInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
   const userInfo = {
-    name,
-    phone,
-    email,
+    ...userData,
     address,
   };
   const totalNum = total.toLocaleString().replace(/\D/g, ""); // convert 100.000 back to 100000
   const allOrderInfo = {
     userId: user?._id,
-    products,
+    products: products.map((product) => ({
+      productID: product._id,
+      productColor: product.color,
+      productSize: product.size,
+      productTitle: product.title,
+    })),
     amount: totalNum,
     userInfo,
     methodInfo,
+  };
+  console.log(errors);
+  const summitForm = (data) => {
+    setUserData({
+      name: data.name,
+      phone: data.phone,
+      email: data.email,
+    });
+    setAddress({ ...address, street: data.street });
+    address.ward === "" || address.district === "" || address.province === ""
+      ? toast.error("Vui lòng chọn tỉnh thành, huyện, xã")
+      : navigate("/checkout/step2");
+  };
+  const handleCreateOrder = (order) => {
+    if (products.length === 0) {
+      toast.error("Không có sản phẩm trong giỏ hàng, không thể tiếp tục!");
+    } else {
+      createOrder(dispatch, allOrderInfo);
+      dispatch(deleteCart());
+      navigate("/checkout/step3");
+    }
   };
   return (
     <div className="checkout">
@@ -114,46 +179,56 @@ const CheckoutPage = ({ type }) => {
           <span>
             Bạn đã có tài khoản? <Link to="/login">Đăng nhập</Link>
           </span>
-          <form className="checkout__form" action="">
+          <form
+            onSubmit={handleSubmit(summitForm)}
+            id="form"
+            className="checkout__form"
+            action=""
+          >
             <input
               type="text"
-              onChange={(e) => setName(e.target.value)}
+              {...register("name", { required: true })}
               name="name"
               className="checkout__form-name"
               placeholder="Họ và tên"
             />
+            <p className="error-msg">{errors.name?.message}</p>
 
             <div className="checkout__form-container">
-              <input
-                type="text"
-                name="email"
-                onChange={(e) => setEmail(e.target.value)}
-                className="checkout__form-email"
-                placeholder="Email"
-              />
-
-              <input
-                type="number"
-                name="phone"
-                onChange={(e) => setPhone(e.target.value)}
-                className="checkout__form-phone"
-                placeholder="Số Điện Thoại"
-              />
+              <div className="checkout__form-email">
+                <input
+                  type="text"
+                  name="email"
+                  {...register("email", { required: true })}
+                  placeholder="Email"
+                />
+                <p className="error-msg">{errors.email?.message}</p>
+              </div>
+              <div className="checkout__form-phone">
+                <input
+                  type="number"
+                  name="phone"
+                  {...register("phone", { required: true })}
+                  placeholder="Số Điện Thoại"
+                />
+                <p className="error-msg">{errors.phone?.message}</p>
+              </div>
             </div>
 
             <input
               className="checkout__form-address"
               name="street"
-              onChange={handleAddress}
+              {...register("street", { required: true })}
               type="text"
               placeholder="Vui lòng nhập số nhà và tên đường nơi bạn ở"
             />
+            <p className="error-msg">{errors.street?.message}</p>
             <div className="checkout__select">
               <select
                 ref={provinceRef}
                 onChange={handleProvince}
                 name="province"
-                placeholder="Tinh thanh"
+                placeholder="Tỉnh thành"
               >
                 {address.province === "" && (
                   <option value="default">Vui lòng chọn tỉnh</option>
@@ -206,9 +281,12 @@ const CheckoutPage = ({ type }) => {
               </select>
             </div>
           </form>
-          <Link href="" to="/checkout/step2" className="checkout__pay-btn">
-            Tiếp tục
-          </Link>
+          <input
+            type="submit"
+            form="form"
+            className="checkout__pay-btn"
+            value="Tiếp tục"
+          />
         </div>
       )}
       {type === "step2" && (
@@ -242,17 +320,12 @@ const CheckoutPage = ({ type }) => {
             <Link href="" to="/checkout">
               Quay lại thông tin giao hàng
             </Link>
-            <Link
-              href=""
-              to="/checkout/step3"
+            <button
               className="checkout-step2__btn-finish"
-              onClick={() => {
-                createOrder(dispatch, allOrderInfo);
-                dispatch(deleteCart());
-              }}
+              onClick={handleCreateOrder}
             >
               Hoàn Tất Đơn Hàng
-            </Link>
+            </button>
           </div>
         </div>
       )}
@@ -279,10 +352,10 @@ const CheckoutPage = ({ type }) => {
               <div className="checkout-step3__order-info">
                 <h4>Thông tin đơn hàng</h4>
                 <p>
-                  Tên: <span>{name}</span>
+                  Tên: <span>{userInfo.name}</span>
                 </p>
                 <p>
-                  Số điện thoại: <span>{phone && phone}</span>
+                  Số điện thoại: <span>{userInfo.phone}</span>
                 </p>
                 <p>
                   Địa chỉ:{" "}

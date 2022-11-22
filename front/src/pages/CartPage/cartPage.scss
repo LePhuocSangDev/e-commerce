@@ -51,12 +51,11 @@
 
     &-desc {
 
-
-
-      h4 {
+      .product-heading {
         font-weight: 700;
         text-transform: capitalize;
         margin: $spacing-sm 0;
+        color: black;
       }
 
       .product-price {

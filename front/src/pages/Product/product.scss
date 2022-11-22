@@ -67,21 +67,19 @@
 
        
         &-input {
-         display: flex;
+          display: flex;
+          border: 1px solid black;
+          justify-content: space-between;
+          padding: 0 4px;
+          width: 40%;
+          max-width: 100px;
          
           button {
-          padding: 8px;
-           font-size: 20px;
-           cursor: pointer;
-           border: 1px solid gray;
+            font-size: 20px;
           }
-         input {
-          padding: 4px;
-          width: 30%;
-          outline: none;
-          margin: 0 $spacing-sm; 
-          text-align: center
-         }
+          span {
+            cursor: not-allowed;
+          }
         }
       }
       &__button {
@@ -101,8 +99,8 @@
         }
       }
   
-      &__button.bg-black {
-        background-color: black;
+      &__button.bg-primary {
+        background-color: $primary;
       }
       &__desc {
         &-title {
