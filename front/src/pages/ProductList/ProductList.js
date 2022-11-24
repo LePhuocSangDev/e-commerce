@@ -9,18 +9,14 @@ import { NavLink, useLocation } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
-import { useNavigate } from "react-router-dom";
-import { redirect } from "react-router-dom";
 
 const ProductList = ({ type }) => {
   const location = useLocation();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const cat = location.pathname.split("/")[2];
   const { products, isFetching } = useSelector(selectProduct);
   const [showFilter, setShowFilter] = useState(true);
   const [search, setSearch] = useState("");
-  const [productsSearch, setProductsSearch] = useState([]);
   const [productsFilter, setProductsFilter] = useState([]);
   const [filters, setFilters] = useState({});
   const [price, setPrice] = useState([5, 10000000]);
@@ -42,24 +38,65 @@ const ProductList = ({ type }) => {
     getProduct(dispatch);
   }, [dispatch]);
   useEffect(() => {
-    if (search) {
+    if (search && Object.keys(filters).length === 0) {
+      // user search and doesn't do filter
       const searchResult = products.filter((product) =>
         product.title.toLowerCase().includes(search.toLowerCase())
       );
-      setProductsSearch(searchResult);
+      setProductsFilter(searchResult);
+    } else if (search && Object.keys(filters).length !== 0) {
+      //user search and filter
+      const searchResult = products.filter((product) =>
+        product.title.toLowerCase().includes(search.toLowerCase())
+      );
+      setProductsFilter(
+        searchResult.filter(
+          (item) =>
+            Object.entries(filters).every(([key, value]) =>
+              item[key].includes(value.toString().toLowerCase())
+            ) &&
+            item.price >= price[0] &&
+            item.price <= price[1]
+        )
+      );
+    } else if (
+      !search &&
+      !cat &&
+      price[0] === 5 &&
+      price[1] === 10000000 &&
+      Object.keys(filters).length === 0
+      // initial state after clearing filters
+    ) {
+      setProductsFilter(products);
+    } else if (
+      // only filter without search or category
+      !search &&
+      !cat
+    ) {
+      setProductsFilter(
+        products.filter(
+          (item) =>
+            Object.entries(filters).every(([key, value]) =>
+              item[key].includes(value.toString().toLowerCase())
+            ) &&
+            item.price >= price[0] &&
+            item.price <= price[1]
+        )
+      );
+    } else {
+      // normal filter with category and price
+      setProductsFilter(
+        products.filter(
+          (item) =>
+            Object.entries(filters).every(([key, value]) =>
+              item[key].includes(value.toString().toLowerCase())
+            ) &&
+            item.categories.toString().includes(cat) &&
+            item.price >= price[0] &&
+            item.price <= price[1]
+        )
+      );
     }
-
-    setProductsFilter(
-      products.filter(
-        (item) =>
-          Object.entries(filters).every(([key, value]) =>
-            item[key].includes(value.toString().toLowerCase())
-          ) &&
-          item.categories.toString().includes(cat) &&
-          item.price >= price[0] &&
-          item.price <= price[1]
-      )
-    );
   }, [search, filters, price, products, cat]);
   useEffect(() => {
     if (cat) {
@@ -119,7 +156,7 @@ const ProductList = ({ type }) => {
           ) : (
             <div className="list__heading">
               <h2>Danh mục sản phẩm</h2>
-              <p>I'm a paragraph. Click here to add your own text.</p>
+              <p>Hãy chọn lựa và mua ngay những sản phẩm tốt nhất</p>
             </div>
           )}
           <div
@@ -201,17 +238,6 @@ const ProductList = ({ type }) => {
                             Kid
                           </NavLink>
                         </li>
-                        {/* {["New", "Men", "Women", "Kid"].map((collection) => (
-                          <NavLink
-                            key={collection}
-                            to={`/products/${collection.toLowerCase()}`}
-                            className={({ isActive }) =>
-                              isActive ? "collection-active" : ""
-                            }
-                          >
-                            {collection}
-                          </NavLink>
-                        ))} */}
                       </ul>
                     )}
                   </div>
@@ -328,6 +354,12 @@ const ProductList = ({ type }) => {
                       </Box>
                     )}
                   </div>
+                  <div className="filter-type">
+                    <button onClick={clearFilter} className="clear-filter2">
+                      Clear filter
+                    </button>
+                  </div>
+
                   {/* mobile */}
                   <div className="filter__mobile-button">
                     <button
@@ -356,13 +388,9 @@ const ProductList = ({ type }) => {
               </button>
 
               <div className="list__right">
-                {search
-                  ? productsSearch.map((product) => (
-                      <ProductCard key={product.title} product={product} />
-                    ))
-                  : productsFilter.map((product) => (
-                      <ProductCard key={product.title} product={product} />
-                    ))}
+                {productsFilter.map((product) => (
+                  <ProductCard key={product.title} product={product} />
+                ))}
               </div>
             </div>
           </div>

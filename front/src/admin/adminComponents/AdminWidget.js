@@ -15,27 +15,22 @@ const bull = (
   </Box>
 );
 
-export default function Widget() {
+export default function Widget({ title, num, change }) {
   return (
     <Card sx={{ minWidth: 200, flex: 1 }}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Word of the Day
+          {title}
         </Typography>
-        <Typography variant="h5" component="div">
-          be{bull}nev{bull}o{bull}lent
+        <Typography variant="h5" component="div" my={2}>
+          {title === "Số Lượng Người Dùng" ? num : `${num}đ`}
         </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          adjective
-        </Typography>
-        <Typography variant="body2">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
+        <Typography variant="body2">{`Tăng ${change} so với tháng vừa rồi.`}</Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button variant="contained" size="small">
+          Xem chi tiết
+        </Button>
       </CardActions>
     </Card>
   );

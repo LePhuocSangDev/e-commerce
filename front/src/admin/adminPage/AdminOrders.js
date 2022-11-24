@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,18 +7,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { Link as RouterLink } from "react-router-dom";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { deleteProduct, getProduct } from "../../features/apiCall";
+import { deleteOrder, getOrders } from "../../features/apiCall";
 import { useDispatch, useSelector } from "react-redux";
-import { publicRequest, userRequest } from "../../axios";
-import { selectProduct } from "../../features/productSlice";
-import axios from "axios";
+import { selectOrder } from "../../features/orderSlice";
 
 const columns = [
   { id: "id", label: "ID", minWidth: 170 },
-  { id: "products", label: "PRODUCTS", minWidth: 100 },
+  { id: "code", label: "CODE", minWidth: 100 },
   {
     id: "status",
     label: "STATUS",
@@ -44,20 +41,15 @@ const columns = [
 
 export default function Products() {
   const dispatch = useDispatch();
-  const { products } = useSelector(selectProduct);
-  const [orderInfo, setOrderInfo] = useState([]);
+  const { orders, orderInfo } = useSelector(selectOrder);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      const { data } = await userRequest.get("/orders");
-      setOrderInfo(data);
-    };
-    fetchOrders();
-  }, []);
+    getOrders(dispatch);
+  }, [dispatch]);
   const handleDelete = (id) => {
-    deleteProduct(dispatch, id);
+    deleteOrder(dispatch, id);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -72,26 +64,18 @@ export default function Products() {
   return (
     <Box>
       <Typography variant="h4" gutterBottom>
-        User's orders
+        Đơn đặt hàng
       </Typography>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "flex-end",
             alignItems: "center",
             padding: "16px",
+            width: "100%",
           }}
         >
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="/admin/product/create"
-            size="small"
-            color="success"
-          >
-            Create Product
-          </Button>
           <Box sx={{ display: "flex", alignItems: "flex-end" }}>
             <SearchIcon
               sx={{
@@ -120,36 +104,26 @@ export default function Products() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {orderInfo
+              {orders
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((product, index) => (
+                .map((order, index) => (
                   <TableRow
-                    key={product._id}
+                    key={order._id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row" align="center">
                       {index + 1}
                     </TableCell>
-                    <TableCell align="center">{product.status}</TableCell>
-                    <TableCell align="center">{product.status}</TableCell>
+                    <TableCell align="center">{order.orderCode}</TableCell>
+                    <TableCell align="center">{order.status}</TableCell>
+                    <TableCell align="center">{order.userInfo.name}</TableCell>
                     <TableCell align="center">
-                      {product.userInfo.name}
-                    </TableCell>
-                    <TableCell align="center">
-                      <Button
-                        component={RouterLink}
-                        to={`/admin/product/update/${product._id}`}
-                        variant="contained"
-                        size="small"
-                      >
-                        Edit
-                      </Button>
                       <Button
                         variant="contained"
                         color="error"
                         size="small"
                         sx={{ ml: "4px" }}
-                        onClick={() => handleDelete(product._id)}
+                        onClick={() => handleDelete(order._id)}
                       >
                         Delete
                       </Button>
@@ -162,7 +136,7 @@ export default function Products() {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={products.length}
+          count={orders.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

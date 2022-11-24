@@ -51,8 +51,7 @@
       min-height: 30vh;
       position: relative;
       &:hover {
-        scale: 1.1;
-        z-index: 999;
+        opacity: 0.6;
       }
       img {
         width: 100%;
@@ -82,15 +81,6 @@
       height: 100%;
     }
 
-    img {
-      width: 100%; 
-      height:auto;
-      position: absolute;
-      left: 0;    
-      &:hover{
-        opacity: 1.5
-      };
-    }
     
   }
 }

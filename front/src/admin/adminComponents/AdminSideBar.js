@@ -12,7 +12,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import PeopleIcon from "@mui/icons-material/People";
 import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
-import GradeIcon from '@mui/icons-material/Grade';
 
 const AdminSideBar = ({ openMenu, toggle }) => {
   const handleMenu = () => {
@@ -22,6 +21,7 @@ const AdminSideBar = ({ openMenu, toggle }) => {
     <Box
       sx={{
         width: `${openMenu ? "20vw" : "5vw"}`,
+        minWidth: "45px",
         boxSizing: "border-box",
         borderRight: "1px solid rgba(0,0,0,0.2)",
         height: "100vh",
@@ -67,7 +67,7 @@ const AdminSideBar = ({ openMenu, toggle }) => {
             <HomeIcon />
           </ListItemIcon>
           <ListItemText
-            primary="Home"
+            primary="Trang Chủ"
             sx={{ display: openMenu ? "block" : "none" }}
           />
         </ListItemButton>
@@ -90,7 +90,7 @@ const AdminSideBar = ({ openMenu, toggle }) => {
             <PeopleIcon />
           </ListItemIcon>
           <ListItemText
-            primary="User"
+            primary="Người Dùng"
             sx={{ display: openMenu ? "block" : "none" }}
           />
         </ListItemButton>
@@ -113,7 +113,7 @@ const AdminSideBar = ({ openMenu, toggle }) => {
             <InboxIcon />
           </ListItemIcon>
           <ListItemText
-            primary="Products"
+            primary="Sản Phẩm"
             sx={{ display: openMenu ? "block" : "none" }}
           />
         </ListItemButton>
@@ -136,7 +136,7 @@ const AdminSideBar = ({ openMenu, toggle }) => {
             <ProductionQuantityLimitsIcon />
           </ListItemIcon>
           <ListItemText
-            primary="Orders"
+            primary="Đơn Đặt Hàng"
             sx={{ display: openMenu ? "block" : "none" }}
           />
         </ListItemButton>

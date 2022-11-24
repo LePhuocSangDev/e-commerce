@@ -40,7 +40,6 @@ const schema = yup
 
 const CheckoutPage = ({ type }) => {
   const {
-    resetField,
     register,
     handleSubmit,
     formState: { errors },
@@ -60,9 +59,6 @@ const CheckoutPage = ({ type }) => {
   const total = useSelector((state) => state.cart.total);
 
   const [userData, setUserData] = useState({});
-  const [phone, setPhone] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [address, setAddress] = useState({
     street: "",
     ward: "",
@@ -145,12 +141,13 @@ const CheckoutPage = ({ type }) => {
       productColor: product.color,
       productSize: product.size,
       productTitle: product.title,
+      productQuantity: product.productQuantity,
     })),
     amount: totalNum,
     userInfo,
     methodInfo,
   };
-  console.log(errors);
+  console.log(allOrderInfo);
   const summitForm = (data) => {
     setUserData({
       name: data.name,
@@ -383,7 +380,7 @@ const CheckoutPage = ({ type }) => {
           </div>
         ))}
       <div className="cart-page__summary">
-        <h4 className="cart-page__title">Order summary</h4>
+        <h4 className="cart-page__title">Tóm Tắt Đơn Hàng</h4>
         <div className="cart-page__summary-detail">
           <div className="cart-page__summary-coupon">
             <input

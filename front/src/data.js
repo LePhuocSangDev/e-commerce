@@ -44,31 +44,58 @@ export const UserData = [
   {
     id: 1,
     year: 2016,
-    userGain: 80000,
+    userGain: 8000,
     userLost: 823,
   },
   {
     id: 2,
     year: 2017,
-    userGain: 45677,
-    userLost: 345,
+    userGain: 4567,
+    userLost: 1300,
   },
   {
     id: 3,
     year: 2018,
-    userGain: 78888,
-    userLost: 555,
+    userGain: 7888,
+    userLost: 2200,
   },
   {
     id: 4,
     year: 2019,
-    userGain: 90000,
-    userLost: 4555,
+    userGain: 9000,
+    userLost: 855,
   },
   {
     id: 5,
     year: 2020,
     userGain: 4300,
-    userLost: 234,
+    userLost: 604,
+  },
+];
+export const IncomeData = [
+  {
+    id: 1,
+    year: 2018,
+    income: 8,
+  },
+  {
+    id: 2,
+    year: 2019,
+    income: 16.7,
+  },
+  {
+    id: 3,
+    year: 2020,
+    income: 25.8,
+  },
+  {
+    id: 4,
+    year: 2021,
+    income: 60.8,
+  },
+  {
+    id: 5,
+    year: 2022,
+    income: 80,
   },
 ];

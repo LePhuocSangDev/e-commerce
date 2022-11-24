@@ -184,6 +184,8 @@
         @include button;
         background: black;
       }
+
+     
   
       .apply-filter {
 
@@ -191,6 +193,12 @@
         background: $primary;
         
       }
+    }
+    .clear-filter2 {
+      margin: auto;
+      @include button;
+      min-width: 120px;
+      background: $primary;
     }
    
 

@@ -5,25 +5,33 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { Link as RouterLink } from "react-router-dom";
+import { Link, Link as RouterLink, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
-import { selectUser, logOut } from "../../features/userSlice";
-import { useSelector } from "react-redux";
-import { useToggle } from "../../hooks/useToggle";
+import { selectUser } from "../../features/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../features/apiCall";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile", "Logout"];
 
 const Header = () => {
-  const user = useSelector(selectUser);
+  const { userInfo } = useSelector(selectUser);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
   return (
-    <AppBar sx={{ position: "sticky" }}>
+    <AppBar sx={{ position: "sticky", backgroundColor: "black" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
           <Button variant="string" to="/" component={RouterLink}>
@@ -31,7 +39,8 @@ const Header = () => {
               sx={{
                 display: {
                   xs: "none",
-                  md: "flex",
+
+                  lg: "flex",
                 },
                 mr: 1,
               }}
@@ -43,7 +52,6 @@ const Header = () => {
               href="/"
               sx={{
                 mr: 2,
-                display: { xs: "none", md: "flex" },
                 fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
@@ -55,15 +63,6 @@ const Header = () => {
             </Typography>
           </Button>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
             <Menu
               id="menu-appbar"
               anchorOrigin={{
@@ -80,52 +79,56 @@ const Header = () => {
               }}
             ></Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
-
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton sx={{ p: 0 }}>
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                <Typography pl="8px">{user?.username}</Typography>
+                <Typography pl="8px" color="white">
+                  {userInfo?.username}
+                </Typography>
               </IconButton>
             </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+            {userInfo && (
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    {setting === "Logout" ? (
+                      <button
+                        onClick={() => {
+                          logout(dispatch);
+                          navigate("/");
+                        }}
+                      >
+                        {setting}
+                      </button>
+                    ) : (
+                      <Link
+                        to={`/profile`}
+                        textAlign="center"
+                        style={{ color: "black" }}
+                      >
+                        {setting}
+                      </Link>
+                    )}
+                  </MenuItem>
+                ))}
+              </Menu>
+            )}
           </Box>
         </Toolbar>
       </Container>

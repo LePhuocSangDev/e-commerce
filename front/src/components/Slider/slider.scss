@@ -23,6 +23,9 @@
       width: 15px;
       height: 15px;
       background: #cdcfdd;
+      &.active {
+        background: #000;
+      }
     }
   }
   

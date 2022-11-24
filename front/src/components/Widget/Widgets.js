@@ -14,9 +14,9 @@ const Widgets = ({ size }) => {
           <img alt="/" src={`${size ? img : shoe2}`} />
         </div>
         <div className="widget-desc">
-          <h4>Top Rated</h4>
-          <h2>Shop For Home Decore's</h2>
-          <Link to="/products">Shop Now</Link>
+          <h4>Bán Chạy Nhất</h4>
+          <h2>Nike Air Jordan</h2>
+          <Link to="/products">Mua ngay</Link>
         </div>
       </div>
 
@@ -25,9 +25,9 @@ const Widgets = ({ size }) => {
           <img alt="/" src={`${size ? shoe3 : shoe4}`} />
         </div>
         <div className="widget-desc">
-          <h4>Top Rated</h4>
-          <h2>Shop For Home Decore's</h2>
-          <Link to="/products">Shop Now</Link>
+          <h4>Giày Mới</h4>
+          <h2>Adidas superstar</h2>
+          <Link to="/products">Mua ngay</Link>
         </div>
       </div>
     </div>

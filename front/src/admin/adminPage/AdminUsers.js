@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,12 +7,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { Link as RouterLink } from "react-router-dom";
+
 import { Box, Button, TextField, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { deleteUser, getUsers } from "../../features/apiCall";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../features/userSlice";
+import { selectOrder } from "../../features/orderSlice";
 
 const columns = [
   { id: "id", label: "ID", minWidth: 170 },
@@ -31,8 +32,9 @@ const columns = [
 export default function AdminUsers() {
   const dispatch = useDispatch();
   const { users } = useSelector(selectUser);
-  console.log(users);
   const [page, setPage] = useState(0);
+  const { orders } = useSelector(selectOrder);
+  console.log(orders);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
@@ -60,20 +62,11 @@ export default function AdminUsers() {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "flex-end",
             alignItems: "center",
             padding: "16px",
           }}
         >
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="/admin/product/create"
-            size="small"
-            color="success"
-          >
-            Create Product
-          </Button>
           <Box sx={{ display: "flex", alignItems: "flex-end" }}>
             <SearchIcon
               sx={{
@@ -115,14 +108,6 @@ export default function AdminUsers() {
                     <TableCell align="center">{user.username}</TableCell>
                     <TableCell align="center">{user.email}</TableCell>
                     <TableCell align="center">
-                      <Button
-                        component={RouterLink}
-                        to={`/admin/product/update/${user._id}`}
-                        variant="contained"
-                        size="small"
-                      >
-                        Edit
-                      </Button>
                       <Button
                         variant="contained"
                         color="error"

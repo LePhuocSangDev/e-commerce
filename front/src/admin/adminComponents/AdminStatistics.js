@@ -11,11 +11,16 @@ const AdminStatistics = () => {
         p: "16px",
         border: "1px solid rgba(0,0,0,0.2)",
         borderRadius: "10px",
+        width: "auto",
       }}
     >
-      <Typography variant="h5">Statistics</Typography>
-      <Typography variant="p">Total 48.5% growth 😎 this month</Typography>
-      <Stack direction="row" justifyContent="space-between">
+      <Typography variant="h5">Thông số</Typography>
+      <Typography variant="p">Tăng trưởng tổng cộng 48.5% 😎</Typography>
+      <Stack
+        direction={{ xs: "column", sm: "column", md: "row" }}
+        justifyContent="space-between"
+        spacing={2}
+      >
         <Stack direction="row" spacing={2} alignItems="center">
           <TrendingUpIcon
             sx={{
@@ -32,7 +37,7 @@ const AdminStatistics = () => {
               variant="body1"
               sx={{ fontSize: "16px", color: "#777777" }}
             >
-              Sales
+              Doanh Thu
             </Typography>
             <Typography variant="p">245K</Typography>
           </Box>
@@ -53,7 +58,7 @@ const AdminStatistics = () => {
               variant="body1"
               sx={{ fontSize: "16px", color: "#777777" }}
             >
-              Customers
+              Người Dùng
             </Typography>
             <Typography variant="p">245K</Typography>
           </Box>
@@ -74,7 +79,7 @@ const AdminStatistics = () => {
               variant="body1"
               sx={{ fontSize: "16px", color: "#777777" }}
             >
-              Products
+              Sản phẩm
             </Typography>
             <Typography variant="p">245K</Typography>
           </Box>
@@ -95,7 +100,7 @@ const AdminStatistics = () => {
               variant="body1"
               sx={{ fontSize: "16px", color: "#777777" }}
             >
-              Revenue
+              Tăng Trưởng Tháng
             </Typography>
             <Typography variant="p">245K</Typography>
           </Box>
