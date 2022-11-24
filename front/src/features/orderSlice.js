@@ -3,7 +3,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const initialState = {
-  orderInfo: [],
+  orderInfo: {},
+  orders: [],
 };
 
 export const orderSlice = createSlice({
@@ -26,12 +27,46 @@ export const orderSlice = createSlice({
       state.error = true;
       state.isFetching = false;
     },
+    deleteOrderStart: (state) => {
+      state.isFetching = true;
+    },
+    deleteOrderSuccess: (state, action) => {
+      state.isFetching = false;
+      state.orders.splice(
+        state.orders.findIndex((item) => item._id === action.payload),
+        1
+      );
+    },
+    deleteOrderError: (state) => {
+      state.error = true;
+      state.isFetching = false;
+    },
+    getOrdersStart: (state) => {
+      state.isFetching = true;
+    },
+    getOrdersSuccess: (state, action) => {
+      state.isFetching = false;
+      state.orders = action.payload;
+    },
+    getOrdersError: (state) => {
+      state.error = true;
+      state.isFetching = false;
+    },
   },
 });
 
 export const selectOrder = (state) => state.order;
 
-export const { createOrderStart, createOrderSuccess, createOrderError } =
-  orderSlice.actions;
+export const {
+  createOrderStart,
+  createOrderSuccess,
+  createOrderError,
+  deleteOrderStart,
+  deleteOrderSuccess,
+  deleteOrderError,
+  getOrdersStart,
+  getOrdersSuccess,
+  getOrdersError,
+} = orderSlice.actions;
 
 export default orderSlice.reducer;

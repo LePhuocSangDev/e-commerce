@@ -8,10 +8,14 @@ const OrderSchema = new mongoose.Schema(
         productId: {
           type: String,
         },
+        productTitle: {
+          type: String,
+        },
         productQuantity: {
           type: Number,
-          default: 1,
         },
+        productColor: { type: Array, optional: true },
+        productSize: { type: Array, optional: true },
       },
     ],
     amount: { type: Number, required: true },

@@ -37,6 +37,12 @@ import {
   createOrderError,
   createOrderStart,
   createOrderSuccess,
+  deleteOrderError,
+  deleteOrderStart,
+  deleteOrderSuccess,
+  getOrdersError,
+  getOrdersStart,
+  getOrdersSuccess,
 } from "./orderSlice";
 import { toast } from "react-toastify";
 
@@ -81,7 +87,7 @@ export const register = async (dispatch, user) => {
 export const getUsers = async (dispatch) => {
   dispatch(getUsersStart());
   try {
-    const res = await userRequest.get("/users");
+    const res = await publicRequest.get("/users");
     dispatch(getUsersSuccess(res.data));
   } catch (error) {
     dispatch(getUsersError());
@@ -162,5 +168,24 @@ export const createOrder = async (dispatch, orderInfo) => {
     dispatch(createOrderSuccess(res.data));
   } catch (error) {
     dispatch(createOrderError());
+  }
+};
+export const deleteOrder = async (dispatch, id) => {
+  dispatch(deleteOrderStart());
+  try {
+    const res = await userRequest.delete(`/orders/${id}`);
+    dispatch(deleteOrderSuccess(id));
+    toast.success(res.data, { toastId: "toast-delete" });
+  } catch (error) {
+    dispatch(deleteOrderError());
+  }
+};
+export const getOrders = async (dispatch) => {
+  dispatch(getOrdersStart());
+  try {
+    const res = await publicRequest.get("/orders");
+    dispatch(getOrdersSuccess(res.data));
+  } catch (error) {
+    dispatch(getOrdersError());
   }
 };

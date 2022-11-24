@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,17 +8,10 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Link as RouterLink } from "react-router-dom";
-import {
-  Box,
-  Button,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { deleteProduct, getProduct } from "../../features/apiCall";
 import { useDispatch, useSelector } from "react-redux";
-import { publicRequest } from "../../axios";
 import { selectProduct } from "../../features/productSlice";
 
 const columns = [

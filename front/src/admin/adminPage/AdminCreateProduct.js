@@ -7,9 +7,8 @@ import {
   Typography,
 } from "@mui/material";
 import Container from "@mui/material/Container";
-import { Link as RouterLink, useLocation } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import { publicRequest } from "../../axios";
+import { Link as RouterLink } from "react-router-dom";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createProduct } from "../../features/apiCall";
 

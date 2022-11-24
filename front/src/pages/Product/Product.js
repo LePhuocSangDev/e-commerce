@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./product.scss";
-import { Link, redirect, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { publicRequest } from "../../axios";
 import { useSelector, useDispatch } from "react-redux";
 import { addProduct, getTotal, selectCart } from "../../features/cartSlice";

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./slider.scss";
 import { sliderImg } from "../../data";
-import { Link } from "react-router-dom";
 
 const Slider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   let interval;
-  let count = 0;
+  let countRef = useRef(0);
+  let count = countRef.current;
   useEffect(() => {
     interval = setInterval(() => {
       count = (count + 1) % sliderImg.length;
