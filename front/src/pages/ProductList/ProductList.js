@@ -354,7 +354,7 @@ const ProductList = ({ type }) => {
                       </Box>
                     )}
                   </div>
-                  <div className="filter-type">
+                  <div className="filter-type res-hidden">
                     <button onClick={clearFilter} className="clear-filter2">
                       Clear filter
                     </button>

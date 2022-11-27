@@ -395,7 +395,9 @@
           gap: 16px;
         }
         
-        
+        .clear-filter2 {
+          display: none;
+        }
       }
     }
    
@@ -451,6 +453,9 @@
       p {
         font-size: 16px;
       }
+    }
+    .res-hidden {
+      display: none;
     }
 
   }
@@ -908,6 +913,9 @@
       p {
         font-size: 16px;
       }
+    }
+    .res-hidden {
+      display: none;
     }
 
   }
