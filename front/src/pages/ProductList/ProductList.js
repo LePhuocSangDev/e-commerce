@@ -1,26 +1,27 @@
-import React, { useEffect, useState } from "react";
-import ProductCard from "../../components/ProductCard/ProductCard";
-import "./productList.scss";
-import { AiOutlineCheck, AiOutlineSearch } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
-import { selectProduct } from "../../features/productSlice";
-import { getProduct } from "../../features/apiCall";
-import { NavLink, useLocation } from "react-router-dom";
-import Loader from "../../components/Loader/Loader";
-import Box from "@mui/material/Box";
-import Slider from "@mui/material/Slider";
+import React, { useEffect, useState, memo, useMemo } from 'react';
+import ProductCard from '../../components/ProductCard/ProductCard';
+import './productList.scss';
+import { AiOutlineCheck, AiOutlineSearch } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectProduct } from '../../features/productSlice';
+import { getProduct } from '../../features/apiCall';
+import { NavLink, useLocation } from 'react-router-dom';
+import Loader from '../../components/Loader/Loader';
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
+import { useCallback } from 'react';
 
-const ProductList = ({ type }) => {
+const ProductList = memo(({ type }) => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const cat = location.pathname.split("/")[2];
+  const cat = location.pathname.split('/')[2];
   const { products, isFetching } = useSelector(selectProduct);
   const [showFilter, setShowFilter] = useState(true);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [productsFilter, setProductsFilter] = useState([]);
   const [filters, setFilters] = useState({});
   const [price, setPrice] = useState([5, 10000000]);
-  const [sort, setSort] = useState("");
+  const [sort, setSort] = useState('');
   const [showCollection, setShowCollection] = useState(false);
   const [showPrice, setShowPrice] = useState(false);
   const [showSize, setShowSize] = useState(false);
@@ -30,8 +31,9 @@ const ProductList = ({ type }) => {
     window.scrollTo(0, 0);
   }, []);
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
     window.innerWidth <= 1200 && setShowFilter(false);
+    return () => window.removeEventListener('resize', handleResize);
   }, []); // For Filter responsiveness
 
   useEffect(() => {
@@ -100,9 +102,7 @@ const ProductList = ({ type }) => {
   }, [search, filters, price, products, cat]);
   useEffect(() => {
     if (cat) {
-      const productsCat = products.filter((product) =>
-        product.categories.toString().includes(cat)
-      );
+      const productsCat = products.filter((product) => product.categories.toString().includes(cat));
       setProductsFilter(productsCat);
     } else {
       setProductsFilter(products);
@@ -110,7 +110,7 @@ const ProductList = ({ type }) => {
   }, [cat, products]);
 
   useEffect(() => {
-    if (sort === "newest") {
+    if (sort === 'newest') {
       setProductsFilter((prev) =>
         [...prev].sort((a, b) => {
           var dateA = new Date(a.createdAt);
@@ -118,7 +118,7 @@ const ProductList = ({ type }) => {
           return dateA - dateB;
         })
       );
-    } else if (sort === "priceLow") {
+    } else if (sort === 'priceLow') {
       setProductsFilter((prev) => [...prev].sort((a, b) => a.price - b.price));
     } else {
       setProductsFilter((prev) => [...prev].sort((a, b) => b.price - a.price));
@@ -126,7 +126,7 @@ const ProductList = ({ type }) => {
   }, [sort]);
   const clearFilter = () => {
     setPrice([5, 10000000]);
-    setSort("");
+    setSort('');
     setFilters({});
     setShowFilter(true);
   };
@@ -141,7 +141,7 @@ const ProductList = ({ type }) => {
         <Loader />
       ) : (
         <div className="list">
-          {type === "search" ? (
+          {type === 'search' ? (
             <div className="search__input">
               <input
                 value={search}
@@ -161,9 +161,9 @@ const ProductList = ({ type }) => {
           )}
           <div
             style={{
-              position: "relative",
-              display: "flex",
-              flexDirection: "column",
+              position: 'relative',
+              display: 'flex',
+              flexDirection: 'column',
             }}
           >
             <div className="sort-products">
@@ -182,15 +182,13 @@ const ProductList = ({ type }) => {
 
             <div className="list__container">
               {showFilter && (
-                <div className={`list__left ${showFilter && "show-filter"}`}>
+                <div className={`list__left ${showFilter && 'show-filter'}`}>
                   <p className="list__filter">Filter by</p>
                   <div className="filter-type">
                     <p>
                       Category
-                      <button
-                        onClick={() => setShowCollection((prev) => !prev)}
-                      >
-                        {showCollection ? "-" : "+"}
+                      <button onClick={() => setShowCollection((prev) => !prev)}>
+                        {showCollection ? '-' : '+'}
                       </button>
                     </p>
                     {showCollection && (
@@ -200,9 +198,7 @@ const ProductList = ({ type }) => {
                         </li>
                         <li>
                           <NavLink
-                            className={({ isActive }) =>
-                              isActive ? "collection-active" : ""
-                            }
+                            className={({ isActive }) => (isActive ? 'collection-active' : '')}
                             to="/products/new"
                           >
                             New
@@ -210,9 +206,7 @@ const ProductList = ({ type }) => {
                         </li>
                         <li>
                           <NavLink
-                            className={({ isActive }) =>
-                              isActive ? "collection-active" : ""
-                            }
+                            className={({ isActive }) => (isActive ? 'collection-active' : '')}
                             to="/products/men"
                           >
                             Men
@@ -220,9 +214,7 @@ const ProductList = ({ type }) => {
                         </li>
                         <li>
                           <NavLink
-                            className={({ isActive }) =>
-                              isActive ? "collection-active" : ""
-                            }
+                            className={({ isActive }) => (isActive ? 'collection-active' : '')}
                             to="/products/women"
                           >
                             Women
@@ -230,9 +222,7 @@ const ProductList = ({ type }) => {
                         </li>
                         <li>
                           <NavLink
-                            className={({ isActive }) =>
-                              isActive ? "collection-active" : ""
-                            }
+                            className={({ isActive }) => (isActive ? 'collection-active' : '')}
                             to="/products/kid"
                           >
                             Kid
@@ -243,9 +233,9 @@ const ProductList = ({ type }) => {
                   </div>
                   <div className="filter-type">
                     <p>
-                      Size{" "}
+                      Size{' '}
                       <button onClick={() => setShowSize((prev) => !prev)}>
-                        {showSize ? "-" : "+"}
+                        {showSize ? '-' : '+'}
                       </button>
                     </p>
                     {showSize && (
@@ -270,73 +260,60 @@ const ProductList = ({ type }) => {
                   </div>
                   <div className="filter-type">
                     <p>
-                      Color{" "}
+                      Color{' '}
                       <button onClick={() => setShowColor((prev) => !prev)}>
-                        {showColor ? "-" : "+"}
+                        {showColor ? '-' : '+'}
                       </button>
                     </p>
                     {showColor && (
                       <div className="filter-type__colors">
-                        {[
-                          "black",
-                          "white",
-                          "red",
-                          "yellow",
-                          "purple",
-                          "blue",
-                          "green",
-                        ].map((color) => (
-                          <label
-                            key={color}
-                            className="filter-type__colors-wrapper"
-                          >
-                            <input
-                              type="radio"
-                              name="color"
-                              value={color}
-                              id={color}
-                              onChange={(e) => {
-                                e.target.checked &&
-                                  setFilters((prev) => ({
-                                    ...prev,
-                                    color: e.target.value,
-                                  }));
-                              }}
-                            />
-                            <span
-                              className="checkmark"
-                              style={{
-                                backgroundColor: color,
-                                border: `${
-                                  color === "white" && "1px solid black"
-                                }`,
-                              }}
-                            >
+                        {['black', 'white', 'red', 'yellow', 'purple', 'blue', 'green'].map(
+                          (color) => (
+                            <label key={color} className="filter-type__colors-wrapper">
+                              <input
+                                type="radio"
+                                name="color"
+                                value={color}
+                                id={color}
+                                onChange={(e) => {
+                                  e.target.checked &&
+                                    setFilters((prev) => ({
+                                      ...prev,
+                                      color: e.target.value,
+                                    }));
+                                }}
+                              />
                               <span
-                                className="checkmark-checked"
+                                className="checkmark"
                                 style={{
-                                  color: `${
-                                    color === "white" ? "black" : "white"
-                                  }`,
+                                  backgroundColor: color,
+                                  border: `${color === 'white' && '1px solid black'}`,
                                 }}
                               >
-                                <AiOutlineCheck />
+                                <span
+                                  className="checkmark-checked"
+                                  style={{
+                                    color: `${color === 'white' ? 'black' : 'white'}`,
+                                  }}
+                                >
+                                  <AiOutlineCheck />
+                                </span>
                               </span>
-                            </span>
-                          </label>
-                        ))}
+                            </label>
+                          )
+                        )}
                       </div>
                     )}
                   </div>
                   <div className="filter-type">
                     <p>
-                      Price{" "}
+                      Price{' '}
                       <button onClick={() => setShowPrice((prev) => !prev)}>
-                        {showPrice ? "-" : "+"}
+                        {showPrice ? '-' : '+'}
                       </button>
                     </p>
                     {showPrice && (
-                      <Box sx={{ width: "100%", position: "relative" }}>
+                      <Box sx={{ width: '100%', position: 'relative' }}>
                         <Slider
                           className="price-slider"
                           value={price}
@@ -345,12 +322,8 @@ const ProductList = ({ type }) => {
                           onChange={(e) => setPrice(e.target.value)}
                           valueLabelDisplay="off"
                         />
-                        <span className="price-min">
-                          {price[0].toLocaleString("vi-VN")}đ
-                        </span>
-                        <span className="price-max">
-                          {price[1].toLocaleString("vi-VN")}đ
-                        </span>
+                        <span className="price-min">{price[0].toLocaleString('vi-VN')}đ</span>
+                        <span className="price-max">{price[1].toLocaleString('vi-VN')}đ</span>
                       </Box>
                     )}
                   </div>
@@ -362,16 +335,10 @@ const ProductList = ({ type }) => {
 
                   {/* mobile */}
                   <div className="filter__mobile-button">
-                    <button
-                      onClick={() => setShowFilter(false)}
-                      className="close-filter"
-                    >
+                    <button onClick={() => setShowFilter(false)} className="close-filter">
                       Close
                     </button>
-                    <button
-                      onClick={() => setShowFilter(false)}
-                      className="apply-filter"
-                    >
+                    <button onClick={() => setShowFilter(false)} className="apply-filter">
                       Apply
                     </button>
                     <button onClick={clearFilter} className="clear-filter">
@@ -380,10 +347,7 @@ const ProductList = ({ type }) => {
                   </div>
                 </div>
               )}
-              <button
-                onClick={() => setShowFilter(true)}
-                className="mobile__filter"
-              >
+              <button onClick={() => setShowFilter(true)} className="mobile__filter">
                 Filter
               </button>
 
@@ -398,6 +362,6 @@ const ProductList = ({ type }) => {
       )}
     </>
   );
-};
+});
 
 export default ProductList;

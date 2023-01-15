@@ -104,39 +104,42 @@ export default function Products() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {orders
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((order, index) => (
-                  <TableRow
-                    key={order._id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row" align="center">
-                      {index + 1}
-                    </TableCell>
-                    <TableCell align="center">{order.orderCode}</TableCell>
-                    <TableCell align="center">{order.status}</TableCell>
-                    <TableCell align="center">{order.userInfo.name}</TableCell>
-                    <TableCell align="center">
-                      <Button
-                        variant="contained"
-                        color="error"
-                        size="small"
-                        sx={{ ml: "4px" }}
-                        onClick={() => handleDelete(order._id)}
-                      >
-                        Delete
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
+              {orders &&
+                orders
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((order, index) => (
+                    <TableRow
+                      key={order._id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row" align="center">
+                        {index + 1}
+                      </TableCell>
+                      <TableCell align="center">{order.orderCode}</TableCell>
+                      <TableCell align="center">{order.status}</TableCell>
+                      <TableCell align="center">
+                        {order.userInfo.name}
+                      </TableCell>
+                      <TableCell align="center">
+                        <Button
+                          variant="contained"
+                          color="error"
+                          size="small"
+                          sx={{ ml: "4px" }}
+                          onClick={() => handleDelete(order._id)}
+                        >
+                          Delete
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={orders.length}
+          count={orders?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

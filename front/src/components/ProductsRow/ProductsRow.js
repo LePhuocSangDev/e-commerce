@@ -1,8 +1,8 @@
-import React from "react";
-import ProductCard from "../ProductCard/ProductCard";
-import "./productsRow.scss";
-import { Link } from "react-router-dom";
-import { categories } from "../../data";
+import React from 'react';
+import ProductCard from '../ProductCard/ProductCard';
+import './productsRow.scss';
+import { Link } from 'react-router-dom';
+import { categories } from '../../data';
 
 const ProductsRow = ({ title, type, products }) => {
   const productsRender = [...products].splice(0, 10);
@@ -16,9 +16,9 @@ const ProductsRow = ({ title, type, products }) => {
             {categories.map((c) => (
               <div className="category" key={c.name}>
                 <Link
-                  to={`/products/${c.name.toLowerCase().split(" ").join("")}`} // To make words like "Best seller" become "bestseller"
+                  to={`/products/${c.name.toLowerCase().split(' ').join('')}`} // To make words like "Best seller" become "bestseller"
                 >
-                  <img src={c.img} alt="/" />
+                  <img src={c.img} alt="/" loading="lazy" width="100%" height="100%" />
 
                   <p>{c.name}</p>
                 </Link>

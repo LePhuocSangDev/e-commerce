@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import "./Navbar.scss";
+import React, { useEffect, useState } from 'react';
+import './Navbar.scss';
 import {
   AiFillFacebook,
   AiFillLinkedin,
@@ -8,17 +8,17 @@ import {
   AiOutlineMenu,
   AiOutlineShoppingCart,
   AiOutlineSearch,
-} from "react-icons/ai";
-import { CgProfile } from "react-icons/cg";
-import { MdDarkMode } from "react-icons/md";
-import { FaGreaterThan } from "react-icons/fa";
-import { BsSun } from "react-icons/bs";
-import { Link, NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { selectUser } from "../../features/userSlice";
-import { dark, selectTheme, light } from "../../features/themeSlice";
-import { clearCartItem, getTotal, selectCart } from "../../features/cartSlice";
-import { logout } from "../../features/apiCall";
+} from 'react-icons/ai';
+import { CgProfile } from 'react-icons/cg';
+import { MdDarkMode } from 'react-icons/md';
+import { FaGreaterThan } from 'react-icons/fa';
+import { BsSun } from 'react-icons/bs';
+import { Link, NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser } from '../../features/userSlice';
+import { dark, selectTheme, light } from '../../features/themeSlice';
+import { clearCartItem, getTotal, selectCart } from '../../features/cartSlice';
+import { logout } from '../../features/apiCall';
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -30,7 +30,7 @@ const Navbar = () => {
   const theme = useSelector(selectTheme);
   const [closeCart, setCloseCart] = useState(true);
   const handleClick = () => {
-    theme === "light" ? dispatch(dark()) : dispatch(light());
+    theme === 'light' ? dispatch(dark()) : dispatch(light());
   };
   const handleLogout = (e) => {
     e.preventDefault();
@@ -61,9 +61,7 @@ const Navbar = () => {
         </div>
         <ul>
           <li>
-            <button onClick={handleClick}>
-              {theme === "light" ? <MdDarkMode /> : <BsSun />}
-            </button>
+            <button onClick={handleClick}>{theme === 'light' ? <MdDarkMode /> : <BsSun />}</button>
           </li>
           <li>
             <a href="/">Coupon</a>
@@ -91,21 +89,17 @@ const Navbar = () => {
         </button>
 
         <div className="logo">
-          <Link to="/"></Link>
+          <Link to="/" aria-label="logo"></Link>
         </div>
         <ul className="menu">
           <li>
-            <NavLink
-              className={({ isActive }) => (isActive ? "nav-active" : "")}
-              to="/"
-              href=""
-            >
+            <NavLink className={({ isActive }) => (isActive ? 'nav-active' : '')} to="/" href="">
               Trang chủ
             </NavLink>
           </li>
           <li>
             <NavLink
-              className={({ isActive }) => (isActive ? "nav-active" : "")}
+              className={({ isActive }) => (isActive ? 'nav-active' : '')}
               to="/products/new"
               href=""
             >
@@ -114,7 +108,7 @@ const Navbar = () => {
           </li>
           <li>
             <NavLink
-              className={({ isActive }) => (isActive ? "nav-active" : "")}
+              className={({ isActive }) => (isActive ? 'nav-active' : '')}
               to="/products/men"
               href=""
             >
@@ -123,7 +117,7 @@ const Navbar = () => {
           </li>
           <li>
             <NavLink
-              className={({ isActive }) => (isActive ? "nav-active" : "")}
+              className={({ isActive }) => (isActive ? 'nav-active' : '')}
               to="/products/women"
               href=""
             >
@@ -132,7 +126,7 @@ const Navbar = () => {
           </li>
           <li>
             <NavLink
-              className={({ isActive }) => (isActive ? "nav-active" : "")}
+              className={({ isActive }) => (isActive ? 'nav-active' : '')}
               to="/products/kid"
               href=""
             >
@@ -143,10 +137,7 @@ const Navbar = () => {
         {/* mobile */}
         {showMenu && (
           <ul className="mobile-menu">
-            <button
-              onClick={() => setShowMenu(false)}
-              className="mobile-menu__close"
-            >
+            <button onClick={() => setShowMenu(false)} className="mobile-menu__close">
               X
             </button>
             <li>
@@ -165,10 +156,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link
-                to="/products/bestseller"
-                onClick={() => setShowMenu(false)}
-              >
+              <Link to="/products/bestseller" onClick={() => setShowMenu(false)}>
                 Khuyến mãi
               </Link>
             </li>
@@ -187,7 +175,7 @@ const Navbar = () => {
                 <span>{userInfo.username}</span>
               </button>
             ) : (
-              <Link to="/login" className="user-options__avatar">
+              <Link to="/login" aria-label="login" className="user-options__avatar">
                 <i>
                   <CgProfile />
                 </i>
@@ -214,7 +202,7 @@ const Navbar = () => {
             )}
           </div>
 
-          <Link onClick={() => setCloseCart(false)} to="#">
+          <Link aria-label="cart" onClick={() => setCloseCart(false)} to="#">
             <i>
               <AiOutlineShoppingCart />
             </i>
@@ -222,7 +210,7 @@ const Navbar = () => {
               <span className="cart-search__quantity">{cartItems.length}</span>
             )}
           </Link>
-          <Link to="/search" className="cart-search__avatar">
+          <Link to="/search" aria-label="cart-search" className="cart-search__avatar">
             <i>
               <AiOutlineSearch />
             </i>
@@ -256,14 +244,10 @@ const Navbar = () => {
                 <div className="cart__item-info">
                   <h4 className="cart__item-title">{item.title}</h4>
                   <p className="cart__item-price">
-                    {(item.price * item.productQuantity).toLocaleString(
-                      "vi-VN"
-                    )}
+                    {(item.price * item.productQuantity).toLocaleString('vi-VN')}
                     <span className="currency">đ</span>
                   </p>
-                  <p className="cart__item-quantity">
-                    Số lượng: {item.productQuantity}
-                  </p>
+                  <p className="cart__item-quantity">Số lượng: {item.productQuantity}</p>
                 </div>
 
                 <button onClick={() => dispatch(clearCartItem(item))}>X</button>
